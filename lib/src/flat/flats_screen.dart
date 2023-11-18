@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rent_checklist/src/common/app_bar.dart';
+import 'package:rent_checklist/src/common/widgets/app_bar.dart';
+import 'package:rent_checklist/src/flat/flat_list.dart';
 import 'package:rent_checklist/src/res/strings.dart';
 
 class FlatsScreen extends StatelessWidget {
@@ -11,9 +12,7 @@ class FlatsScreen extends StatelessWidget {
       appBar: RentAppBar(
         title: Strings.flatsToolbarTitle,
       ),
-      body: const Center(
-        child: Text('Hello World!'),
-      ),
+      body: const FlatList(),
     );
   }
 }
