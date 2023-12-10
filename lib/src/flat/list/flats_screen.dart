@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rent_checklist/src/common/widgets/app_bar.dart';
-import 'package:rent_checklist/src/flat/flat_list.dart';
+import 'package:rent_checklist/src/flat/list/flat_list.dart';
 import 'package:rent_checklist/src/res/strings.dart';
 
 class FlatsScreen extends StatelessWidget {
@@ -13,6 +13,10 @@ class FlatsScreen extends StatelessWidget {
         title: Strings.flatsToolbarTitle,
       ),
       body: const FlatList(),
+      floatingActionButton: const FloatingActionButton(
+        onPressed: null,
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
