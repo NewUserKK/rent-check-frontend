@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rent_checklist/src/common/utils/extensions.dart';
 import 'package:rent_checklist/src/flat/flat_api.dart';
 import 'package:rent_checklist/src/flat/flat_model.dart';
 
@@ -42,9 +43,24 @@ class _FlatListState extends State<FlatList> {
       itemCount: flats.length,
       itemBuilder: (context, index) {
         final flat = flats[index];
+
+        final title = flat.title ?? flat.address;
+
+        var isThreeLine = false;
+        String? subtitle;
+        if (flat.title != null && flat.description != null) {
+          isThreeLine = true;
+          subtitle = "${flat.description}\n${flat.address}";
+        } else if (flat.title != null) {
+          subtitle = flat.address;
+        } else if (flat.description != null) {
+          subtitle = flat.description;
+        }
+
         return ListTile(
-          title: Text(flat.title),
-          subtitle: Text(flat.description),
+          title: Text(title),
+          subtitle: subtitle?.let((it) => Text(it)),
+          isThreeLine: isThreeLine,
         );
       },
     );

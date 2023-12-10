@@ -8,6 +8,7 @@ import 'flat_model.dart';
 
 abstract interface class FlatApi {
   Future<List<FlatModel>> getFlats();
+  Future<FlatModel> createFlat(FlatModel flat);
 }
 
 class FlatApiFactory {
@@ -24,7 +25,23 @@ class NetworkFlatApi implements FlatApi {
       final json = jsonDecode(response.data!) as Iterable;
       return json.map((v) => FlatModel.fromJson(v)).toList();
     } catch (e) {
+      print(e);
       return [];
+    }
+  }
+
+  @override
+  Future<FlatModel> createFlat(FlatModel flat) async {
+    try {
+      final Response<String> response = await kClient.post(
+        'flats',
+        data: flat.toJson(),
+      );
+      final json = jsonDecode(response.data!) as Map<String, dynamic>;
+      return FlatModel.fromJson(json);
+    } catch (e) {
+      print(e);
+      return flat;
     }
   }
 }
@@ -35,13 +52,10 @@ class FakeFlatApi implements FlatApi {
     try {
       final Response<String> response = Response(
         data: '''[
-          {"id": 1, "title": "title 1", "description": "description", "address": "address"},
-          {"id": 2, "title": "title 2", "description": "description", "address": "address"},
-          {"id": 3, "title": "title 3", "description": "description", "address": "address"},
-          {"id": 4, "title": "title 4", "description": "description", "address": "address"},
-          {"id": 5, "title": "title 5", "description": "description", "address": "address"},
-          {"id": 6, "title": "title 6", "description": "description", "address": "address"},
-          {"id": 7, "title": "title 7", "description": "description", "address": "address"}
+          {"id": 1, "address": "address 1"},
+          {"id": 2, "address": "address 2", "title": "title 2"},
+          {"id": 3, "address": "address 3", "description": "description 3"},
+          {"id": 4, "address": "address 4", "title": "title 4", "description": "description 4"}
         ]''',
         statusCode: 200,
         requestOptions: RequestOptions(path: 'flats'),
@@ -51,6 +65,27 @@ class FakeFlatApi implements FlatApi {
       return json.map((v) => FlatModel.fromJson(v)).toList();
     } catch (e) {
       return [];
+    }
+  }
+
+  @override
+  Future<FlatModel> createFlat(FlatModel flat) async {
+    try {
+      final Response<String> response = Response(
+        data: '''{
+          "id": 5,
+          "address": "${flat.address}",
+          "title": "${flat.title}",
+          "description": "${flat.description}"
+        }''',
+        statusCode: 200,
+        requestOptions: RequestOptions(path: 'flats'),
+      );
+
+      final json = jsonDecode(response.data!) as Map<String, dynamic>;
+      return FlatModel.fromJson(json);
+    } catch (e) {
+      return flat;
     }
   }
 }

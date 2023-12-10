@@ -4,4 +4,10 @@ class Strings {
   static const String flatListToolbarTitle = "Flats";
 
   static const String flatAddToolbarTitle = "Add flat";
+
+  static const String flatFormFieldAddress = "Address";
+  static const String flatFormFieldTitle = "Title";
+  static const String flatFormFieldDescription = "Description";
+  static const String flatFormFieldRequiredError = "This field is required";
+  static const String flatFormAddButton = "Add";
 }
