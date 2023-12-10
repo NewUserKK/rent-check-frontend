@@ -12,7 +12,7 @@ class FlatList extends StatefulWidget {
 class _FlatListState extends State<FlatList> {
   late Future<List<FlatModel>> flats;
 
-  final _api = FlatApi();
+  final _api = FlatApiFactory.create();
 
   @override
   void initState() {

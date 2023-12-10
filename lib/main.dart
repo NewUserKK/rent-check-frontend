@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rent_checklist/src/common/network/client.dart';
 import 'package:rent_checklist/src/flat/flats_screen.dart';
 
 void main() {
+  initializeHttpClient();
   runApp(const MainApp());
 }
 
