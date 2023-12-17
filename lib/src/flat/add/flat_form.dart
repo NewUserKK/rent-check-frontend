@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rent_checklist/src/common/network/api_utils.dart';
+import 'package:rent_checklist/src/common/widgets/snackbar.dart';
 import 'package:rent_checklist/src/flat/flat_api.dart';
 import 'package:rent_checklist/src/flat/flat_model.dart';
 import 'package:rent_checklist/src/res/strings.dart';
@@ -97,13 +99,13 @@ class _FlatFormState extends State<FlatForm> {
     try {
       var addedFlat = await _flatApi.createFlat(flat);
       if (context.mounted) { 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Flat added: $addedFlat')),
-        );
+        SnackBarUtils.showSnackBar(context, "Flat added: $addedFlat");
         Navigator.pop(context);
       }
-    } catch (e) {
-      print(e);
+    } on NetworkError catch (e) {
+      if (context.mounted) {
+        SnackBarUtils.showSnackBar(context, "Flat add error: $e");
+      }
     } finally {
       _setButtonEnabled(true);
     }

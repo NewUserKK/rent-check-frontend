@@ -29,7 +29,8 @@ class _FlatListState extends State<FlatList> {
         if (snapshot.hasData) {
           return _buildList(snapshot.data as List<FlatModel>);
         } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
+          final err = snapshot.error;
+          return Text('$err');
         }
         return const Center(
           child: CircularProgressIndicator(),

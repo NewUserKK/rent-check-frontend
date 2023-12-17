@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:rent_checklist/src/common/experiments/features.dart';
+import 'package:rent_checklist/src/common/network/api_utils.dart';
 import 'package:rent_checklist/src/common/network/client.dart';
 
 import 'flat_model.dart';
@@ -20,29 +21,16 @@ class FlatApiFactory {
 class NetworkFlatApi implements FlatApi {
   @override
   Future<List<FlatModel>> getFlats() async {
-    try {
-      final Response<String> response = await kClient.get('flats');
-      final json = jsonDecode(response.data!) as Iterable;
-      return json.map((v) => FlatModel.fromJson(v)).toList();
-    } catch (e) {
-      print(e);
-      return [];
-    }
+    final json = await ApiUtils.requestAndDecodeToList(() => kClient.get('flats'));
+    return json.map((v) => FlatModel.fromJson(v)).toList();
   }
 
   @override
   Future<FlatModel> createFlat(FlatModel flat) async {
-    try {
-      final Response<String> response = await kClient.post(
-        'flats',
-        data: flat.toJson(),
-      );
-      final json = jsonDecode(response.data!) as Map<String, dynamic>;
-      return FlatModel.fromJson(json);
-    } catch (e) {
-      print(e);
-      return flat;
-    }
+    final json = await ApiUtils.requestAndDecode(() =>
+      kClient.post('flats', data: flat.toJson())
+    );
+    return FlatModel.fromJson(json);
   }
 }
 
