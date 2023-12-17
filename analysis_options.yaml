@@ -1,1 +1,5 @@
 include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    - prefer_for_elements_to_map_fromiterable: false

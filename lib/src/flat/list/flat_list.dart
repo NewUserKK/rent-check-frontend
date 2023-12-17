@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rent_checklist/src/common/utils/extensions.dart';
+import 'package:rent_checklist/src/common/widgets/load_utils.dart';
+import 'package:rent_checklist/src/flat/details/flat_detail_screen.dart';
 import 'package:rent_checklist/src/flat/flat_api.dart';
 import 'package:rent_checklist/src/flat/flat_model.dart';
 
@@ -23,20 +25,7 @@ class _FlatListState extends State<FlatList> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: flats,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return _buildList(snapshot.data as List<FlatModel>);
-        } else if (snapshot.hasError) {
-          final err = snapshot.error;
-          return Text('$err');
-        }
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
+    return renderOnLoad(flats, (data) => _buildList(data));
   }
 
   Widget _buildList(List<FlatModel> flats) {
@@ -62,8 +51,15 @@ class _FlatListState extends State<FlatList> {
           title: Text(title),
           subtitle: subtitle?.let((it) => Text(it)),
           isThreeLine: isThreeLine,
+          onTap: () => _navigateToFlatDetail(context, flat),
         );
       },
+    );
+  }
+
+  void _navigateToFlatDetail(BuildContext context, FlatModel flat) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => FlatDetailScreen(flat: flat))
     );
   }
 }

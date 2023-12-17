@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rent_checklist/src/common/network/api_utils.dart';
 import 'package:rent_checklist/src/common/widgets/snackbar.dart';
+import 'package:rent_checklist/src/flat/details/flat_detail_screen.dart';
 import 'package:rent_checklist/src/flat/flat_api.dart';
 import 'package:rent_checklist/src/flat/flat_model.dart';
 import 'package:rent_checklist/src/res/strings.dart';
@@ -101,6 +102,7 @@ class _FlatFormState extends State<FlatForm> {
       if (context.mounted) { 
         SnackBarUtils.showSnackBar(context, "Flat added: $addedFlat");
         Navigator.pop(context);
+        _navigateToFlatDetail(context, flat);
       }
     } on NetworkError catch (e) {
       if (context.mounted) {
@@ -115,5 +117,11 @@ class _FlatFormState extends State<FlatForm> {
     setState(() {
       _submitEnabled = value;
     });
+  }
+
+  void _navigateToFlatDetail(BuildContext context, FlatModel flat) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => FlatDetailScreen(flat: flat))
+    );
   }
 }
