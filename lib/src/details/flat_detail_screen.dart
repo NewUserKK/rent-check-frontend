@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rent_checklist/src/common/widgets/app_bar.dart';
-import 'package:rent_checklist/src/flat/details/flat_detail_list.dart';
+import 'package:rent_checklist/src/details/flat_detail_list.dart';
 import 'package:rent_checklist/src/flat/flat_model.dart';
 
 class FlatDetailScreen extends StatelessWidget {

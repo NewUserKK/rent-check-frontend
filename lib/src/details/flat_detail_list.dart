@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:rent_checklist/src/common/widgets/load_utils.dart';
-import 'package:rent_checklist/src/flat/details/flat_detail_facade.dart';
-import 'package:rent_checklist/src/flat/details/flat_detail_model.dart';
+import 'package:rent_checklist/src/details/flat_detail_facade.dart';
+import 'package:rent_checklist/src/details/flat_detail_model.dart';
 import 'package:rent_checklist/src/flat/flat_api.dart';
 import 'package:rent_checklist/src/flat/flat_model.dart';
-import 'package:rent_checklist/src/group/group_api.dart';
+import 'package:rent_checklist/src/details/group/group_api.dart';
+import 'package:rent_checklist/src/details/group/group_widget.dart';
 
 class FlatDetailList extends StatefulWidget {
   final FlatModel flat;
@@ -43,12 +44,7 @@ class _FlatDetailListState extends State<FlatDetailList> {
       itemBuilder: (context, index) {
         final groupDetails = state.groups[index];
 
-        return ListTile(
-          title: Text(groupDetails.group.title),
-          subtitle: Text(
-              groupDetails.items.map((it) => it.item.title).join(', ')
-          ),
-        );
+        return GroupWidget(groupDetails: groupDetails);
       },
     );
   }
