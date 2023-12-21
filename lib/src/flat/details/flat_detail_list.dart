@@ -21,7 +21,10 @@ class _FlatDetailListState extends State<FlatDetailList> {
   final flatApi = FlatApiFactory.create();
   final groupApi = GroupApiFactory.create();
 
-  late final FlatDetailFacade facade = FlatDetailFacade(flatApi: flatApi, groupApi: groupApi);
+  late final FlatDetailFacade facade = FlatDetailFacade(
+      flatApi: flatApi,
+      groupApi: groupApi
+  );
 
   @override
   void initState() {
@@ -42,7 +45,9 @@ class _FlatDetailListState extends State<FlatDetailList> {
 
         return ListTile(
           title: Text(groupDetails.group.title),
-          subtitle: Text(groupDetails.items.map((it) => it.item.title).join(', ')),
+          subtitle: Text(
+              groupDetails.items.map((it) => it.item.title).join(', ')
+          ),
         );
       },
     );

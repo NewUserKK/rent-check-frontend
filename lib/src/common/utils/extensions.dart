@@ -1,5 +1,9 @@
 extension TakeIf<T> on T? {
-  T? takeIf(bool Function(T) predicate) => this == null ? null : predicate(this!) ? this : null;
+  T? takeIf(bool Function(T) predicate) => this == null
+      ? null
+      : predicate(this as T)
+          ? this
+          : null;
 }
 
 extension TakeIfNotBlank on String? {

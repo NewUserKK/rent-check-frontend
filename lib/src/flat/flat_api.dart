@@ -33,7 +33,9 @@ class NetworkFlatApi implements FlatApi {
 
   @override
   Future<List<FlatDetailItemsResponse>> getItems(int flatId) async {
-    final json = await requestAndDecodeToList(() => kClient.get('flats/$flatId/items'));
+    final json = await requestAndDecodeToList(
+            () => kClient.get('flats/$flatId/items')
+    );
     return json.map((v) => FlatDetailItemsResponse.fromJson(v)).toList();
   }
 }

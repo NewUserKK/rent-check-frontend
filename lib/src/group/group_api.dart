@@ -46,9 +46,6 @@ class FakeGroupApi implements GroupApi {
     );
     final listRaw = await requestAndDecodeToList(() => Future.value(response));
     final list = listRaw.map((v) => GroupModel.fromJson(v)).toList();
-    return {
-      for (var v in list)
-        v.id: v
-    };
+    return {for (var v in list) v.id: v};
   }
 }

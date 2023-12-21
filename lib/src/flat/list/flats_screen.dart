@@ -23,7 +23,7 @@ class FlatsScreen extends StatelessWidget {
 
   void _navigateToAddFlat(BuildContext context) {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => const FlatAddScreen())
+        MaterialPageRoute(builder: (context) => const FlatAddScreen())
     );
   }
 }

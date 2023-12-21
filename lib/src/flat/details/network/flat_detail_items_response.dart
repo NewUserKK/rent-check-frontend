@@ -8,7 +8,9 @@ class FlatDetailItemsResponse {
 
   factory FlatDetailItemsResponse.fromJson(Map<String, dynamic> json) {
     final itemsListRaw = json['items'] as List<dynamic>;
-    final itemsList = itemsListRaw.map((v) => FlatDetailItemWithStatusResponse.fromJson(v)).toList();
+    final itemsList = itemsListRaw
+        .map((v) => FlatDetailItemWithStatusResponse.fromJson(v))
+        .toList();
 
     return FlatDetailItemsResponse(
       items: itemsList,

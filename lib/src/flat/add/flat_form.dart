@@ -26,7 +26,11 @@ class _FlatFormState extends State<FlatForm> {
 
   @override
   void dispose() {
-    final controllers = [_addressController, _titleController, _descriptionController];
+    final controllers = [
+      _addressController,
+      _titleController,
+      _descriptionController
+    ];
     for (var controller in controllers) {
       controller.dispose();
     }
@@ -67,21 +71,20 @@ class _FlatFormState extends State<FlatForm> {
     required String fieldName,
     required TextEditingController controller,
     bool required = false,
- }) {
+  }) {
     return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(),
-        labelText: fieldName + (required ? '*' : ''),
-      ),
-      validator: (value) {
-        if (required && value?.trim().isEmpty == true) {
-          return Strings.flatFormFieldRequiredError;
-        }
+        controller: controller,
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          labelText: fieldName + (required ? '*' : ''),
+        ),
+        validator: (value) {
+          if (required && value?.trim().isEmpty == true) {
+            return Strings.flatFormFieldRequiredError;
+          }
 
-        return null;
-      }
-    );
+          return null;
+        });
   }
 
   void _submit() async {
@@ -99,7 +102,7 @@ class _FlatFormState extends State<FlatForm> {
 
     try {
       var addedFlat = await _flatApi.createFlat(flat);
-      if (context.mounted) { 
+      if (context.mounted) {
         SnackBarUtils.showSnackBar(context, "Flat added: $addedFlat");
         Navigator.pop(context);
         _navigateToFlatDetail(context, flat);
@@ -121,7 +124,7 @@ class _FlatFormState extends State<FlatForm> {
 
   void _navigateToFlatDetail(BuildContext context, FlatModel flat) {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => FlatDetailScreen(flat: flat))
+        MaterialPageRoute(builder: (context) => FlatDetailScreen(flat: flat))
     );
   }
 }

@@ -17,10 +17,14 @@ class FlatDetailFacade {
     List<int> groupIds = info.map((it) => it.groupId).toList();
     Map<int, GroupModel> groups = await groupApi.getGroupsByIds(groupIds);
 
-    final items = info.map((it) => FlatDetailGroup(
-      group: groups[it.groupId]!,
-      items: it.items.map((it) => ItemWithStatus(item: it.item, status: it.status)).toList(),
-    )).toList();
+    final items = info
+        .map((it) => FlatDetailGroup(
+              group: groups[it.groupId]!,
+              items: it.items
+                  .map((it) => ItemWithStatus(item: it.item, status: it.status))
+                  .toList(),
+            ))
+        .toList();
 
     return FlatDetailModel(groups: items);
   }

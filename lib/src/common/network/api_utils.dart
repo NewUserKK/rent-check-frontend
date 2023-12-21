@@ -20,11 +20,13 @@ class NetworkError {
 }
 
 
-Future<Response<String>> request(Future<Response<String>> Function() makeRequest) async {
+Future<Response<String>> request(
+    Future<Response<String>> Function() makeRequest
+) async {
   try {
     final Response<String> response = await makeRequest();
     return response;
-  } on DioException catch(e) {
+  } on DioException catch (e) {
     throw NetworkError(
       errorCode: e.response?.statusCode ?? 0,
       errorMessage: e.response?.data.toString() ?? '',
@@ -35,21 +37,21 @@ Future<Response<String>> request(Future<Response<String>> Function() makeRequest
 
 
 Future<Map<String, dynamic>> requestAndDecode(
-  Future<Response<String>> Function() makeRequest
+    Future<Response<String>> Function() makeRequest
 ) async {
   return _requestAndDecodeAs<Map<String, dynamic>>(makeRequest);
 }
 
 
 Future<Iterable> requestAndDecodeToList(
-  Future<Response<String>> Function() makeRequest
+    Future<Response<String>> Function() makeRequest
 ) async {
   return _requestAndDecodeAs<Iterable>(makeRequest);
 }
 
 
 Future<T> _requestAndDecodeAs<T>(
-  Future<Response<String>> Function() makeRequest,
+    Future<Response<String>> Function() makeRequest,
 ) async {
   final response = await request(makeRequest);
   return jsonDecode(response.data!) as T;

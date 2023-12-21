@@ -59,7 +59,7 @@ class _FlatListState extends State<FlatList> {
 
   void _navigateToFlatDetail(BuildContext context, FlatModel flat) {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => FlatDetailScreen(flat: flat))
+        MaterialPageRoute(builder: (context) => FlatDetailScreen(flat: flat))
     );
   }
 }
