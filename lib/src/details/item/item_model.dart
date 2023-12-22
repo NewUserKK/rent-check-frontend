@@ -1,28 +1,26 @@
-class ItemModel {
-  final String title;
-  final String? description;
-  final int id;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  ItemModel({
-    required this.title,
-    this.description,
-    required this.id,
-  });
+part 'generated/item_model.freezed.dart';
+part 'generated/item_model.g.dart';
 
-  factory ItemModel.fromJson(Map<String, dynamic> json) {
-    return ItemModel(
-      title: json['title'],
-      description: json['description'],
-      id: json['id'],
-    );
-  }
+@freezed
+class ItemModel with _$ItemModel {
+  const factory ItemModel({
+    required String title,
+    String? description,
+    required int id,
+  }) = _ItemModel;
+
+  factory ItemModel.fromJson(Map<String, dynamic> json) =>
+      _$ItemModelFromJson(json);
 }
 
 
 enum ItemStatus {
+  unset(value: 'unset'),
   ok(value: 'ok'),
-  meh(value: 'meh'),
-  notOk(value: 'not-ok');
+  notOk(value: 'not-ok'),
+  meh(value: 'meh');
 
   final String value;
 
@@ -31,12 +29,20 @@ enum ItemStatus {
   factory ItemStatus.fromJson(String json) {
     return ItemStatus.values.firstWhere((it) => it.value == json);
   }
+
+  ItemStatus next() {
+    return ItemStatus.values[(index + 1) % ItemStatus.values.length];
+  }
 }
 
 
-class ItemWithStatus {
-  final ItemModel item;
-  final ItemStatus status;
+@freezed
+class ItemWithStatus with _$ItemWithStatus {
+  const factory ItemWithStatus({
+    required ItemModel item,
+    required ItemStatus status,
+  }) = _ItemWithStatus;
 
-  ItemWithStatus({required this.item, required this.status});
+  factory ItemWithStatus.fromJson(Map<String, dynamic> json) =>
+      _$ItemWithStatusFromJson(json);
 }

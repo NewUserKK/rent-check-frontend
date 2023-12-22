@@ -1,3 +1,4 @@
+import 'package:rent_checklist/src/common/utils/extensions.dart';
 import 'package:rent_checklist/src/details/flat_detail_model.dart';
 import 'package:rent_checklist/src/details/network/flat_detail_items_response.dart';
 import 'package:rent_checklist/src/flat/flat_api.dart';
@@ -18,13 +19,15 @@ class FlatDetailFacade {
     Map<int, GroupModel> groups = await groupApi.getGroupsByIds(groupIds);
 
     final items = info
-        .map((it) => FlatDetailGroup(
-              group: groups[it.groupId]!,
-              items: it.items
-                  .map((it) => ItemWithStatus(item: it.item, status: it.status))
-                  .toList(),
-            ))
-        .toList();
+        .map((it) =>
+            FlatDetailGroup(
+                group: groups[it.groupId]!,
+                items: it.items
+                    .map((it) => ItemWithStatus(item: it.item, status: it.status))
+                    .associateBy((it) => it.item.id),
+            )
+        )
+        .associateBy((it) => it.group.id);
 
     return FlatDetailModel(groups: items);
   }

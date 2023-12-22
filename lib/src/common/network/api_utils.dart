@@ -46,6 +46,7 @@ Future<Map<String, dynamic>> requestAndDecode(
 Future<Iterable> requestAndDecodeToList(
     Future<Response<String>> Function() makeRequest
 ) async {
+  await Future.delayed(const Duration(milliseconds: 1000));
   return _requestAndDecodeAs<Iterable>(makeRequest);
 }
 

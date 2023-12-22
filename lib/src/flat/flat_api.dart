@@ -43,13 +43,17 @@ class NetworkFlatApi implements FlatApi {
 class FakeFlatApi implements FlatApi {
   @override
   Future<List<FlatModel>> getFlats() async {
+    const address = "Большеохтинский проспект 154";
+    const title = "Квартира с тигром";
+    const description = "Большая квартира с большим тигром, тут ещё много текста и описания";
+
     final response = fakeResponseOf(
       'flats',
       '''[
-        {"id": 1, "address": "address 1"},
-        {"id": 2, "address": "address 2", "title": "title 2"},
-        {"id": 3, "address": "address 3", "description": "description 3"},
-        {"id": 4, "address": "address 4", "title": "title 4", "description": "description 4"}
+        {"id": 1, "address": "$address"},
+        {"id": 2, "address": "$address", "title": "$title"},
+        {"id": 3, "address": "$address", "description": "$description"},
+        {"id": 4, "address": "$address", "title": "$title", "description": "$description"}
       ]'''
     );
     final json = await requestAndDecodeToList(() => Future.value(response));
@@ -79,19 +83,19 @@ class FakeFlatApi implements FlatApi {
       '''[
         {
           "items": [
-            {"item": {"id": 1, "title": "item 1"}, "status": "ok"},
-            {"item": {"id": 2, "title": "item 2"}, "status": "ok"},
-            {"item": {"id": 3, "title": "item 3"}, "status": "meh"},
-            {"item": {"id": 4, "title": "item 4"}, "status": "not-ok"}
+            {"item": {"id": 1, "title": "Напор воды"}, "status": "ok"},
+            {"item": {"id": 2, "title": "Диван"}, "status": "ok"},
+            {"item": {"id": 3, "title": "Вытяжка"}, "status": "meh"},
+            {"item": {"id": 4, "title": "Кровать"}, "status": "not-ok"}
           ],
           "groupId": 1
         },
         {
           "items": [
-            {"item": {"id": 5, "title": "item 5"}, "status": "ok"},
-            {"item": {"id": 6, "title": "item 6"}, "status": "ok"},
-            {"item": {"id": 7, "title": "item 7"}, "status": "ok"},
-            {"item": {"id": 8, "title": "item 8"}, "status": "meh"}
+            {"item": {"id": 5, "title": "Ковёр на стене"}, "status": "ok"},
+            {"item": {"id": 6, "title": "Стол для работы"}, "status": "ok"},
+            {"item": {"id": 7, "title": "Вид из окна"}, "status": "ok"},
+            {"item": {"id": 8, "title": "Кот"}, "status": "meh"}
           ],
           "groupId": 2
         }

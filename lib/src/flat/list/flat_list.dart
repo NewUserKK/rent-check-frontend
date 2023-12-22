@@ -40,7 +40,7 @@ class _FlatListState extends State<FlatList> {
         String? subtitle;
         if (flat.title != null && flat.description != null) {
           isThreeLine = true;
-          subtitle = "${flat.description}\n${flat.address}";
+          subtitle = "${flat.address}\n${flat.description}";
         } else if (flat.title != null) {
           subtitle = flat.address;
         } else if (flat.description != null) {

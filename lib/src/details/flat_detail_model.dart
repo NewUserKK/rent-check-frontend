@@ -1,15 +1,20 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rent_checklist/src/details/group/group_model.dart';
 import 'package:rent_checklist/src/details/item/item_model.dart';
 
-class FlatDetailModel {
-  final List<FlatDetailGroup> groups;
+part 'generated/flat_detail_model.freezed.dart';
 
-  FlatDetailModel({required this.groups});
+@freezed
+class FlatDetailModel with _$FlatDetailModel {
+  const factory FlatDetailModel({
+    required Map<int, FlatDetailGroup> groups
+  }) = _FlatDetailModel;
 }
 
-class FlatDetailGroup {
-  final GroupModel group;
-  final List<ItemWithStatus> items;
-
-  FlatDetailGroup({required this.group, required this.items});
+@freezed
+class FlatDetailGroup with _$FlatDetailGroup {
+  const factory FlatDetailGroup({
+    required GroupModel group,
+    required Map<int, ItemWithStatus> items
+  }) = _FlatDetailGroup;
 }

@@ -1,21 +1,15 @@
-import 'package:rent_checklist/src/common/utils/extensions.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class GroupModel {
-  String title;
-  int id;
+part 'generated/group_model.freezed.dart';
+part 'generated/group_model.g.dart';
 
-  GroupModel({
-    required this.title,
-    required this.id,
-  });
+@freezed
+class GroupModel with _$GroupModel {
+  const factory GroupModel({
+    required String title,
+    required int id,
+  }) = _GroupModel;
 
-  factory GroupModel.fromJson(Map<String, dynamic> json) => GroupModel(
-        title: json['title'],
-        id: json['id'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        'title': title,
-        'id': id.takeIf((it) => it > 0),
-      }.removeNulls();
+  factory GroupModel.fromJson(Map<String, dynamic> json) =>
+      _$GroupModelFromJson(json);
 }

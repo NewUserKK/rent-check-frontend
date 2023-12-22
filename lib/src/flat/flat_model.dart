@@ -1,32 +1,17 @@
-import 'package:rent_checklist/src/common/utils/extensions.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class FlatModel {
-  final String address;
-  final String? title;
-  final String? description;
-  final int id;
+part 'generated/flat_model.freezed.dart';
+part 'generated/flat_model.g.dart';
 
-  FlatModel({
-    required this.address,
-    this.title,
-    this.description,
-    this.id = 0,
-  });
+@freezed
+class FlatModel with _$FlatModel {
+  const factory FlatModel({
+    required String address,
+    String? title,
+    String? description,
+    @Default(0) int id,
+  }) = _FlatModel;
 
-  factory FlatModel.fromJson(Map<String, dynamic> json) => FlatModel(
-        address: json['address'],
-        title: json['title'],
-        description: json['description'],
-        id: json['id'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        'address': address,
-        'title': title.takeIfNotBlank(),
-        'description': description.takeIfNotBlank(),
-        'id': id.takeIf((it) => it > 0),
-      }.removeNulls();
-
-  @override
-  String toString() => toJson().toString();
+  factory FlatModel.fromJson(Map<String, dynamic> json) =>
+      _$FlatModelFromJson(json);
 }

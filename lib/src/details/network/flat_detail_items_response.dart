@@ -1,34 +1,27 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rent_checklist/src/details/item/item_model.dart';
 
-class FlatDetailItemsResponse {
-  final List<FlatDetailItemWithStatusResponse> items;
-  final int groupId;
+part 'generated/flat_detail_items_response.freezed.dart';
+part 'generated/flat_detail_items_response.g.dart';
 
-  FlatDetailItemsResponse({required this.items, required this.groupId});
+@freezed
+class FlatDetailItemsResponse with _$FlatDetailItemsResponse {
+  const factory FlatDetailItemsResponse({
+    required List<FlatDetailItemWithStatusResponse> items,
+    required int groupId,
+  }) = _FlatDetailItemsResponse;
 
-  factory FlatDetailItemsResponse.fromJson(Map<String, dynamic> json) {
-    final itemsListRaw = json['items'] as List<dynamic>;
-    final itemsList = itemsListRaw
-        .map((v) => FlatDetailItemWithStatusResponse.fromJson(v))
-        .toList();
-
-    return FlatDetailItemsResponse(
-      items: itemsList,
-      groupId: json['groupId'],
-    );
-  }
+  factory FlatDetailItemsResponse.fromJson(Map<String, dynamic> json) =>
+      _$FlatDetailItemsResponseFromJson(json);
 }
 
-class FlatDetailItemWithStatusResponse {
-  final ItemModel item;
-  final ItemStatus status;
+@freezed
+class FlatDetailItemWithStatusResponse with _$FlatDetailItemWithStatusResponse {
+  const factory FlatDetailItemWithStatusResponse({
+    required ItemModel item,
+    required ItemStatus status,
+  }) = _FlatDetailItemWithStatusResponse;
 
-  FlatDetailItemWithStatusResponse({required this.item, required this.status});
-
-  factory FlatDetailItemWithStatusResponse.fromJson(Map<String, dynamic> json) {
-    return FlatDetailItemWithStatusResponse(
-      item: ItemModel.fromJson(json['item']),
-      status: ItemStatus.fromJson(json['status']),
-    );
-  }
+  factory FlatDetailItemWithStatusResponse.fromJson(Map<String, dynamic> json) =>
+      _$FlatDetailItemWithStatusResponseFromJson(json);
 }

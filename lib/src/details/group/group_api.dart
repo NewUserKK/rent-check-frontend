@@ -33,13 +33,17 @@ class NetworkGroupApi implements GroupApi {
 class FakeGroupApi implements GroupApi {
   @override
   Future<Map<int, GroupModel>> getGroupsByIds(List<int> ids) async {
+    final values = ["Ванная", "Кухня", "Гостиная", "Спальня"];
     final response = fakeResponseOf(
       'groups',
       // ignore: prefer_interpolation_to_compose_strings
       '[' + 
         ids.map((id) => 
           json.encode(
-            GroupModel(title: "group $id", id: id).toJson()
+            GroupModel(
+                title: values[id % values.length],
+                id: id
+            ).toJson()
           )
         ).join(',') +
       ']'
