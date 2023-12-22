@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_checklist/src/common/widgets/load_utils.dart';
 import 'package:rent_checklist/src/common/widgets/loader.dart';
+import 'package:rent_checklist/src/common/widgets/snackbar.dart';
 import 'package:rent_checklist/src/details/flat_detail_model.dart';
 import 'package:rent_checklist/src/details/flat_detail_state.dart';
+import 'package:rent_checklist/src/details/flat_detail_view_model.dart';
 import 'package:rent_checklist/src/flat/flat_model.dart';
 import 'package:rent_checklist/src/details/group/group_widget.dart';
 
@@ -26,9 +28,19 @@ class _FlatDetailListState extends State<FlatDetailList> {
   @override
   Widget build(BuildContext context) {
     return Consumer<FlatDetailViewModel>(
-      builder: (context, model, _) => _render(model.state)
+      builder: (context, model, _) {
+        if (model.currentEvent != null) {
+          doOnPostFrame(context, () => _handleEvent(model.currentEvent!));
+        }
+        return _render(model.state);
+      }
     );
   }
+
+  void _handleEvent(FlatDetailViewEvent event) => switch (event) {
+    FlatDetailEventChangeItemStatusError e =>
+        showSnackBar(context, 'Error updating status: ${e.error}')
+  };
 
   Widget _render(FlatDetailState state) => switch (state) {
     FlatDetailLoading _ => const Loader(),

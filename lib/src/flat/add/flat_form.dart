@@ -103,13 +103,13 @@ class _FlatFormState extends State<FlatForm> {
     try {
       var addedFlat = await _flatApi.createFlat(flat);
       if (context.mounted) {
-        SnackBarUtils.showSnackBar(context, "Flat added: $addedFlat");
+        showSnackBar(context, "Flat added: $addedFlat");
         Navigator.pop(context);
         _navigateToFlatDetail(context, flat);
       }
     } on NetworkError catch (e) {
       if (context.mounted) {
-        SnackBarUtils.showSnackBar(context, "Flat add error: $e");
+        showSnackBar(context, "Flat add error: $e");
       }
     } finally {
       _setButtonEnabled(true);

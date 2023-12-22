@@ -30,6 +30,8 @@ enum ItemStatus {
     return ItemStatus.values.firstWhere((it) => it.value == json);
   }
 
+  String toJson() => value;
+
   ItemStatus next() {
     return ItemStatus.values[(index + 1) % ItemStatus.values.length];
   }

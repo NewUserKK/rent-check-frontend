@@ -21,7 +21,11 @@ FutureBuilder renderOnLoad<T>(
 }
 
 void withProvider<T>(BuildContext context, void Function(T) block) {
+  doOnPostFrame(context, () => block(Provider.of<T>(context, listen: false)));
+}
+
+void doOnPostFrame(BuildContext context, void Function() block) {
   SchedulerBinding.instance.addPostFrameCallback((_) {
-    block(Provider.of<T>(context, listen: false));
+    block();
   });
 }

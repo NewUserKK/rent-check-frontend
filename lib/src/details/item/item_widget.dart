@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rent_checklist/src/details/flat_detail_state.dart';
+import 'package:rent_checklist/src/details/flat_detail_view_model.dart';
 import 'package:rent_checklist/src/details/group/group_model.dart';
 import 'package:rent_checklist/src/details/item/item_model.dart';
 
