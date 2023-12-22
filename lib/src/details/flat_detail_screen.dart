@@ -16,10 +16,7 @@ class FlatDetailScreen extends StatelessWidget {
       create: (_) => FlatDetailViewModel(flat: flat),
       child: Scaffold(
         appBar: RentAppBar(title: flat.address),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: FlatDetailList(flat: flat),
-        ),
+        body: FlatDetailList(flat: flat),
       ),
     );
   }

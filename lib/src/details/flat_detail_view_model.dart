@@ -1,4 +1,5 @@
 import 'package:rent_checklist/src/common/utils/extensions.dart';
+import 'package:rent_checklist/src/common/widgets/debouncer.dart';
 import 'package:rent_checklist/src/common/widgets/view_event_emitter.dart';
 import 'package:rent_checklist/src/details/flat_detail_facade.dart';
 import 'package:rent_checklist/src/details/flat_detail_state.dart';
@@ -18,12 +19,14 @@ class FlatDetailEventChangeItemStatusError extends FlatDetailViewEvent {
 class FlatDetailViewModel extends ViewEventEmitter<FlatDetailViewEvent> {
   FlatModel flat;
 
-  late final FlatDetailFacade facade =
-  FlatDetailFacade(
+  late final FlatDetailFacade _facade = FlatDetailFacade(
     flatApi: FlatApiFactory.create(),
     groupApi: GroupApiFactory.create(),
     itemApi: ItemApiFactory.create(),
   );
+
+  final _itemStatusDebouncer = Debouncer();
+  ItemStatus? _previousItemStatus;
 
   FlatDetailState state = FlatDetailLoading();
 
@@ -34,7 +37,7 @@ class FlatDetailViewModel extends ViewEventEmitter<FlatDetailViewEvent> {
       _setState(FlatDetailLoading());
       notifyListeners();
 
-      final detail = await facade.requestFlatDetails(flat.id);
+      final detail = await _facade.requestFlatDetails(flat.id);
       _setState(
           FlatDetailSuccess(model: detail)
       );
@@ -56,18 +59,26 @@ class FlatDetailViewModel extends ViewEventEmitter<FlatDetailViewEvent> {
     }
 
     final prevStatus = item.status;
+    _previousItemStatus ??= prevStatus;
     final nextStatus = prevStatus.next();
     _modifyItem(
         groupId, itemId,
         (it) => it.copyWith(status: nextStatus)
     );
 
-    try {
-      await facade.changeItemStatus(flat.id, groupId, itemId, nextStatus);
-    } catch (e) {
-      _modifyItem(groupId, itemId, (it) => it.copyWith(status: prevStatus));
-      emitEvent(FlatDetailEventChangeItemStatusError(e));
-    }
+    _itemStatusDebouncer.run(() async {
+      try {
+        await _facade.changeItemStatus(flat.id, groupId, itemId, nextStatus);
+      } catch (e) {
+        _modifyItem(
+            groupId, itemId,
+            (it) => it.copyWith(status: _previousItemStatus!)
+        );
+        emitEvent(FlatDetailEventChangeItemStatusError(e));
+      } finally {
+        _previousItemStatus = null;
+      }
+    });
   }
 
   void _modifyItem(

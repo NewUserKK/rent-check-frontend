@@ -51,6 +51,7 @@ class _FlatDetailListState extends State<FlatDetailList> {
   Widget _buildList(FlatDetailModel state) {
     return ListView.builder(
       itemCount: state.groups.length,
+      padding: const EdgeInsets.all(16.0),
       itemBuilder: (context, index) {
         final groupDetails = state.groups.values.elementAt(index);
         return GroupWidget(groupDetails: groupDetails);
