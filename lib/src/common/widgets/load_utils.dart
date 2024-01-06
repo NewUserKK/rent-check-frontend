@@ -20,7 +20,7 @@ FutureBuilder renderOnLoad<T>(
   );
 }
 
-void withProvider<T>(BuildContext context, void Function(T) block) {
+void withProviderOnFrame<T>(BuildContext context, void Function(T) block) {
   doOnPostFrame(context, () => block(Provider.of<T>(context, listen: false)));
 }
 

@@ -22,7 +22,7 @@ class _FlatDetailListState extends State<FlatDetailList> {
   @override
   void initState() {
     super.initState();
-    withProvider<FlatDetailViewModel>(context, (it) => it.load());
+    withProviderOnFrame<FlatDetailViewModel>(context, (it) => it.load());
   }
 
   @override
