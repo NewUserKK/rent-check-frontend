@@ -4,6 +4,7 @@ import 'package:rent_checklist/src/common/widgets/view_event_emitter.dart';
 import 'package:rent_checklist/src/details/flat_detail_facade.dart';
 import 'package:rent_checklist/src/details/flat_detail_state.dart';
 import 'package:rent_checklist/src/details/group/group_api.dart';
+import 'package:rent_checklist/src/details/group/group_model.dart';
 import 'package:rent_checklist/src/details/item/item_api.dart';
 import 'package:rent_checklist/src/details/item/item_model.dart';
 import 'package:rent_checklist/src/flat/flat_api.dart';
@@ -79,6 +80,25 @@ class FlatDetailViewModel extends ViewEventEmitter<FlatDetailViewEvent> {
         _previousItemStatus = null;
       }
     });
+  }
+
+  Future<void> createAndAddGroup(GroupModel group) async {
+    if (this.state is! FlatDetailSuccess) {
+      return;
+    }
+
+    final state = this.state as FlatDetailSuccess;
+
+    final newGroupDetails = await _facade.createAndAddGroup(flat.id, group);
+
+    _setState(state.copyWith(
+        model: state.model.copyWith(
+            groups: state.model.groups.set(
+                newGroupDetails.group.id,
+                newGroupDetails
+            )
+        )
+    ));
   }
 
   void _modifyItem(

@@ -7,7 +7,7 @@ part 'generated/group_model.g.dart';
 class GroupModel with _$GroupModel {
   const factory GroupModel({
     required String title,
-    required int id,
+    @Default(0) int id,
   }) = _GroupModel;
 
   factory GroupModel.fromJson(Map<String, dynamic> json) =>

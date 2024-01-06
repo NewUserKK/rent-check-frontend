@@ -14,6 +14,17 @@ extension Let<T, R> on T? {
   R? let(R Function(T) block) => this == null ? null : block(this as T);
 }
 
+extension Also<T, R> on T? {
+  T? also(R Function(T) block) {
+    if (this == null) {
+      return null;
+    }
+
+    block(this as T);
+    return this as T;
+  }
+}
+
 extension RemoveNulls on Map<String, dynamic> {
   Map<String, dynamic> removeNulls() {
     final copy = Map<String, dynamic>.from(this);

@@ -20,6 +20,10 @@ class FlatDetailFacade {
   Future<FlatDetailModel> requestFlatDetails(int flatId) async {
     List<FlatDetailItemsResponse> info = await _flatApi.getItems(flatId);
 
+    if (info.isEmpty) {
+      return const FlatDetailModel(groups: {});
+    }
+
     List<int> groupIds = info.map((it) => it.groupId).toList();
     Map<int, GroupModel> groups = await _groupApi.getGroupsByIds(groupIds);
 
@@ -41,5 +45,17 @@ class FlatDetailFacade {
       int flatId, int groupId, int itemId, ItemStatus newStatus,
   ) async {
     await _itemApi.changeStatus(flatId, groupId, itemId, newStatus);
+  }
+
+  Future<FlatDetailGroup> createAndAddGroup(
+      int flatId,
+      GroupModel groupModel
+  ) async {
+    final newGroup = await _groupApi.createGroup(groupModel);
+    await _flatApi.addGroupToFlat(flatId, newGroup.id);
+    return FlatDetailGroup(
+        group: newGroup,
+        items: {}
+    );
   }
 }

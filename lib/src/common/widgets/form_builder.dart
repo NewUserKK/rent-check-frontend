@@ -89,6 +89,7 @@ class FormBuilder {
           }
 
           return null;
-        });
+        }
+    );
   }
 }

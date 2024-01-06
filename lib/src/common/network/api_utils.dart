@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:rent_checklist/src/common/experiments/features.dart';
 
 class NetworkError {
   final int errorCode;
@@ -39,21 +40,23 @@ Future<Response<String>> request(
 Future<Map<String, dynamic>> requestAndDecode(
     Future<Response<String>> Function() makeRequest
 ) async {
-  return _requestAndDecodeAs<Map<String, dynamic>>(makeRequest);
+  return requestAndDecodeAs<Map<String, dynamic>>(makeRequest);
 }
 
 
 Future<Iterable> requestAndDecodeToList(
     Future<Response<String>> Function() makeRequest
 ) async {
-  await Future.delayed(const Duration(milliseconds: 1000));
-  return _requestAndDecodeAs<Iterable>(makeRequest);
+  return requestAndDecodeAs<Iterable>(makeRequest);
 }
 
 
-Future<T> _requestAndDecodeAs<T>(
+Future<T> requestAndDecodeAs<T>(
     Future<Response<String>> Function() makeRequest,
 ) async {
+  if (Features.useFakeApi.isEnabled) {
+    await Future.delayed(const Duration(milliseconds: 1000));
+  }
   final response = await request(makeRequest);
   return jsonDecode(response.data!) as T;
 }

@@ -11,4 +11,7 @@ class Strings {
   static const String flatFormFieldTitle = "Title";
   static const String flatFormFieldDescription = "Description";
   static const String flatFormAddButton = "Add";
+
+  static const String groupFormTitle = "Add group";
+  static const String groupFormFieldTitle = "Title";
 }

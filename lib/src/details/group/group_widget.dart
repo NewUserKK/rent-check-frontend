@@ -16,14 +16,20 @@ class GroupWidget extends StatelessWidget {
             Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    groupDetails.group.title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        groupDetails.group.title,
+                        style: Theme.of(context).textTheme.headlineSmall
+                      ),
+                      IconButton(
+                          onPressed: () => {},
+                          icon: const Icon(Icons.add)
+                      )
+                    ],
                   ),
-                  const SizedBox(height: 16.0),
+                  SizedBox(height: groupDetails.items.isNotEmpty ? 12.0 : 0),
                   ...groupDetails.items.values.map((it) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       child: ItemWidget(group: groupDetails.group, item: it)

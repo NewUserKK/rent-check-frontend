@@ -28,8 +28,8 @@ class NetworkItemApi implements ItemApi {
       int itemId,
       ItemStatus status
   ) async {
-    await requestAndDecode(() => kClient.post(
-        'item/status',
+    await request(() => kClient.post(
+        'items/status',
         data: {
           'itemId': itemId,
           'groupId': groupId,
