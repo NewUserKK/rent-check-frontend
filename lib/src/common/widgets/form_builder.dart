@@ -5,7 +5,7 @@ import 'package:rent_checklist/src/common/widgets/function_utils.dart';
 import 'package:rent_checklist/src/common/widgets/nullability_utils.dart';
 import 'package:rent_checklist/src/res/strings.dart';
 
-part 'generated/form_creator.freezed.dart';
+part 'generated/form_builder.freezed.dart';
 
 @freezed
 class InputField with _$InputField {

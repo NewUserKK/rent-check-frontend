@@ -101,6 +101,33 @@ class FlatDetailViewModel extends ViewEventEmitter<FlatDetailViewEvent> {
     ));
   }
 
+  Future<void> createAndAddItem(int groupId, ItemModel item) async {
+    if (this.state is! FlatDetailSuccess) {
+      return;
+    }
+
+    final state = this.state as FlatDetailSuccess;
+
+    final newItem = await _facade.createAndAddItem(
+        flatId: flat.id,
+        groupId: groupId,
+        item: item
+    );
+
+    final newModel = state.copyWith(
+        model: state.model.copyWith(
+            groups: state.model.groups.modify(
+                groupId,
+                (group) => group.copyWith(
+                    items: group.items.set(newItem.item.id, newItem)
+                )
+            )
+        )
+    );
+
+    _setState(newModel);
+  }
+
   void _modifyItem(
       int groupId,
       int itemId,
@@ -115,7 +142,7 @@ class FlatDetailViewModel extends ViewEventEmitter<FlatDetailViewEvent> {
     final newModel = state.model.copyWith(
         groups: state.model.groups.modify(
             groupId,
-                (group) => group.copyWith(
+            (group) => group.copyWith(
                 items: group.items.modify(itemId, modifier)
             )
         )

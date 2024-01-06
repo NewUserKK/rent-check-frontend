@@ -8,7 +8,7 @@ class ItemModel with _$ItemModel {
   const factory ItemModel({
     required String title,
     String? description,
-    required int id,
+    @Default(0) int id,
   }) = _ItemModel;
 
   factory ItemModel.fromJson(Map<String, dynamic> json) =>

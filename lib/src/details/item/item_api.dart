@@ -10,6 +10,7 @@ abstract interface class ItemApi {
       int itemId,
       ItemStatus status
   );
+  Future<ItemModel> createItem(ItemModel item);
 }
 
 
@@ -38,6 +39,15 @@ class NetworkItemApi implements ItemApi {
         }
     ));
   }
+
+  @override
+  Future<ItemModel> createItem(ItemModel item) async {
+    final json = await requestAndDecode(() => kClient.post(
+        'items',
+        data: item.toJson(),
+    ));
+    return ItemModel.fromJson(json);
+  }
 }
 
 class FakeItemApi implements ItemApi {
@@ -49,5 +59,10 @@ class FakeItemApi implements ItemApi {
       ItemStatus status
   ) async {
     await Future.delayed(const Duration(milliseconds: 1000));
+  }
+
+  @override
+  Future<ItemModel> createItem(ItemModel item) async {
+    return item.copyWith(id: 9999);
   }
 }

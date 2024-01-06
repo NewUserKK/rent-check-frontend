@@ -9,6 +9,7 @@ import 'package:rent_checklist/src/details/group/group_model.dart';
 abstract interface class GroupApi {
   Future<Map<int, GroupModel>> getGroupsByIds(List<int> ids);
   Future<GroupModel> createGroup(GroupModel group);
+  Future<void> addItemToGroup(int flatId, int groupId, int itemId);
 }
 
 class GroupApiFactory {
@@ -38,6 +39,17 @@ class NetworkGroupApi implements GroupApi {
       data: group.toJson()
     ));
     return GroupModel.fromJson(json);
+  }
+
+  @override
+  Future<void> addItemToGroup(int flatId, int groupId, int itemId) async {
+    await request(() => kClient.post(
+      'groups/$groupId/items',
+      data: {
+        'flatId': flatId,
+        'itemId': itemId,
+      }
+    ));
   }
 }
 
@@ -69,8 +81,12 @@ class FakeGroupApi implements GroupApi {
       'groups',
       jsonEncode(group.toJson().also((v) => v..['id'] = _groups.length + 1))
     );
-    print(response.data);
     final json = await requestAndDecode(() => Future.value(response));
     return GroupModel.fromJson(json);
+  }
+
+  @override
+  Future<void> addItemToGroup(int flatId, int groupId, int itemId) async {
+    await Future.delayed(const Duration(milliseconds: 1000));
   }
 }
