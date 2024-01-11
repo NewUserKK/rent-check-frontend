@@ -1,11 +1,20 @@
 import 'dart:collection';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
-abstract class ViewEventEmitter<Event> extends ChangeNotifier {
+abstract class ViewModel<State, Event> extends ChangeNotifier {
   final _eventQueue = Queue<Event>();
   Event? currentEvent;
 
+  abstract State state;
+
+  @protected
+  void setState(State newState) {
+    state = newState;
+    notifyListeners();
+  }
+
+  @protected
   void emitEvent(Event event) async {
     _eventQueue.addLast(event);
     while (_eventQueue.isNotEmpty) {

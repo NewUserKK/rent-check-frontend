@@ -15,8 +15,8 @@ class FlatDetailError extends FlatDetailState with _$FlatDetailError {
 }
 
 @freezed
-class FlatDetailSuccess extends FlatDetailState with _$FlatDetailSuccess {
-  const factory FlatDetailSuccess({
+class FlatDetailLoaded extends FlatDetailState with _$FlatDetailLoaded {
+  const factory FlatDetailLoaded({
     required FlatDetailModel model
-  }) = _FlatDetailSuccess;
+  }) = _FlatDetailLoaded;
 }

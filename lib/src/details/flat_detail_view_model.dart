@@ -1,6 +1,6 @@
+import 'package:rent_checklist/src/common/arch/view_model.dart';
 import 'package:rent_checklist/src/common/utils/extensions.dart';
 import 'package:rent_checklist/src/common/widgets/debouncer.dart';
-import 'package:rent_checklist/src/common/widgets/view_event_emitter.dart';
 import 'package:rent_checklist/src/details/flat_detail_facade.dart';
 import 'package:rent_checklist/src/details/flat_detail_state.dart';
 import 'package:rent_checklist/src/details/group/group_api.dart';
@@ -17,7 +17,10 @@ class FlatDetailEventChangeItemStatusError extends FlatDetailViewEvent {
 }
 
 
-class FlatDetailViewModel extends ViewEventEmitter<FlatDetailViewEvent> {
+class FlatDetailViewModel extends ViewModel<
+    FlatDetailState,
+    FlatDetailViewEvent
+> {
   FlatModel flat;
 
   late final FlatDetailFacade _facade = FlatDetailFacade(
@@ -29,30 +32,28 @@ class FlatDetailViewModel extends ViewEventEmitter<FlatDetailViewEvent> {
   final _itemStatusDebouncer = Debouncer();
   ItemStatus? _previousItemStatus;
 
+  @override
   FlatDetailState state = FlatDetailLoading();
 
   FlatDetailViewModel({required this.flat});
 
   void load() async {
     try {
-      _setState(FlatDetailLoading());
-      notifyListeners();
+      setState(FlatDetailLoading());
 
       final detail = await _facade.requestFlatDetails(flat.id);
-      _setState(
-          FlatDetailSuccess(model: detail)
-      );
+      setState(FlatDetailLoaded(model: detail));
     } catch (e) {
-      _setState(FlatDetailError(error: e));
+      setState(FlatDetailError(error: e));
     }
   }
 
   void rotateItemStatus(int groupId, int itemId) async {
-    if (this.state is! FlatDetailSuccess) {
+    if (this.state is! FlatDetailLoaded) {
       return;
     }
 
-    final state = this.state as FlatDetailSuccess;
+    final state = this.state as FlatDetailLoaded;
 
     final item = state.model.groups[groupId]?.items[itemId];
     if (item == null) {
@@ -83,15 +84,15 @@ class FlatDetailViewModel extends ViewEventEmitter<FlatDetailViewEvent> {
   }
 
   Future<void> createAndAddGroup(GroupModel group) async {
-    if (this.state is! FlatDetailSuccess) {
+    if (this.state is! FlatDetailLoaded) {
       return;
     }
 
-    final state = this.state as FlatDetailSuccess;
+    final state = this.state as FlatDetailLoaded;
 
     final newGroupDetails = await _facade.createAndAddGroup(flat.id, group);
 
-    _setState(state.copyWith(
+    setState(state.copyWith(
         model: state.model.copyWith(
             groups: state.model.groups.set(
                 newGroupDetails.group.id,
@@ -102,11 +103,11 @@ class FlatDetailViewModel extends ViewEventEmitter<FlatDetailViewEvent> {
   }
 
   Future<void> createAndAddItem(int groupId, ItemModel item) async {
-    if (this.state is! FlatDetailSuccess) {
+    if (this.state is! FlatDetailLoaded) {
       return;
     }
 
-    final state = this.state as FlatDetailSuccess;
+    final state = this.state as FlatDetailLoaded;
 
     final newItem = await _facade.createAndAddItem(
         flatId: flat.id,
@@ -125,7 +126,7 @@ class FlatDetailViewModel extends ViewEventEmitter<FlatDetailViewEvent> {
         )
     );
 
-    _setState(newModel);
+    setState(newModel);
   }
 
   void _modifyItem(
@@ -133,11 +134,11 @@ class FlatDetailViewModel extends ViewEventEmitter<FlatDetailViewEvent> {
       int itemId,
       ItemWithStatus Function(ItemWithStatus) modifier
   ) {
-    if (this.state is! FlatDetailSuccess) {
+    if (this.state is! FlatDetailLoaded) {
       return;
     }
 
-    final state = this.state as FlatDetailSuccess;
+    final state = this.state as FlatDetailLoaded;
 
     final newModel = state.model.copyWith(
         groups: state.model.groups.modify(
@@ -148,11 +149,6 @@ class FlatDetailViewModel extends ViewEventEmitter<FlatDetailViewEvent> {
         )
     );
 
-    _setState(state.copyWith(model: newModel));
-  }
-
-  void _setState(FlatDetailState newState) {
-    state = newState;
-    notifyListeners();
+    setState(state.copyWith(model: newModel));
   }
 }

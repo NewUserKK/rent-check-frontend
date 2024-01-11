@@ -4,7 +4,7 @@ import 'package:rent_checklist/src/common/widgets/app_bar.dart';
 import 'package:rent_checklist/src/details/flat_detail_list.dart';
 import 'package:rent_checklist/src/details/flat_detail_state.dart';
 import 'package:rent_checklist/src/details/flat_detail_view_model.dart';
-import 'package:rent_checklist/src/details/group/group_form.dart';
+import 'package:rent_checklist/src/details/group/add/group_add_screen.dart';
 import 'package:rent_checklist/src/flat/flat_model.dart';
 
 class FlatDetailScreen extends StatelessWidget {
@@ -22,7 +22,7 @@ class FlatDetailScreen extends StatelessWidget {
         appBar: RentAppBar(title: flat.address),
         body: FlatDetailList(flat: flat),
         floatingActionButton: Consumer<FlatDetailViewModel>(
-          builder: (context, model, _) => model.state is FlatDetailSuccess
+          builder: (context, model, _) => model.state is FlatDetailLoaded
               ? _renderAddGroupButton(context)
               : const Stack(),
         ),
@@ -39,11 +39,8 @@ class FlatDetailScreen extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       builder: (context) => ChangeNotifierProvider.value(
-        value: _viewModel,
-        child: const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: GroupForm(),
-        )
+          value: _viewModel,
+          child: const GroupAddScreen()
       )
     );
   }
