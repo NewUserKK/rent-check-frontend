@@ -9,7 +9,7 @@ class FlatAddScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: RentAppBar(title: Strings.flatAddToolbarTitle),
+      appBar: RentAppBar(context, title: Strings.flatAddToolbarTitle),
       body: const Padding(
         padding: EdgeInsets.all(16.0),
         child: FlatForm(),

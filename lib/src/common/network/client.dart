@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:rent_checklist/src/auth/auth_model.dart';
 import 'package:rent_checklist/src/common/network/endpoints.dart';
-import 'package:rent_checklist/src/auth/auth_interceptor.dart';
+import 'package:rent_checklist/src/auth/network/auth_interceptor.dart';
 
 final kClient = Dio(
   BaseOptions(
@@ -8,9 +9,9 @@ final kClient = Dio(
   ),
 );
 
-void initializeHttpClient() {
+void initializeHttpClient({required AuthModel authModel}) {
   final interceptors = <Interceptor?>[
-    AuthInterceptor(),
+    AuthInterceptor(authModel: authModel),
   ].whereType<Interceptor>();
   kClient.interceptors.addAll(interceptors);
 }

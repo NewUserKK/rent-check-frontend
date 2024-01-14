@@ -62,10 +62,16 @@ Future<T> requestAndDecodeAs<T>(
 }
 
 
-Response<String> fakeResponseOf(String path, String json) {
+Response<String> fakeResponseOf(
+    String path,
+    String json,
+    {
+      int statusCode = 200
+    }
+) {
   return Response(
     data: json,
-    statusCode: 200,
+    statusCode: statusCode,
     requestOptions: RequestOptions(path: path),
   );
 }

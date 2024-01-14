@@ -1,6 +1,12 @@
 class Strings {
   static const String appTitle = "Rent checklist";
 
+  static const String authTitle = "Login";
+  static const String authFormFieldLogin = "login";
+  static const String authFormFieldPassword = "password";
+  static const String authFormRegisterButton = "Register";
+  static const String authFormLoginButton = "Login";
+
   static const String flatListToolbarTitle = "Flats";
 
   static const String flatAddToolbarTitle = "Add flat";

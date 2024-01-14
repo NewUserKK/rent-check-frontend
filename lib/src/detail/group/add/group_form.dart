@@ -42,7 +42,9 @@ class _GroupFormState extends State<GroupForm> {
             required: true,
           ),
         ])
-        .onSubmit(() => _submitEnabled ? _submit : null)
+        .submitButtons([
+          SubmitButton(onSubmitProvider: () => _submitEnabled ? _submit : null),
+        ])
         .build();
   }
 

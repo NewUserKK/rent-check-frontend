@@ -56,7 +56,9 @@ class _FlatFormState extends State<FlatForm> {
             controller: _descriptionController,
           ),
         ])
-        .onSubmit(() => _submitEnabled ? _submit : null)
+        .submitButtons([
+          SubmitButton(onSubmitProvider: () => _submitEnabled ? _submit : null),
+        ])
         .build();
   }
 

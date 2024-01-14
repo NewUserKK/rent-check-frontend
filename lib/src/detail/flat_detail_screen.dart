@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rent_checklist/src/auth/auth_aware_widget.dart';
 import 'package:rent_checklist/src/common/widgets/app_bar.dart';
 import 'package:rent_checklist/src/detail/flat_detail_list.dart';
 import 'package:rent_checklist/src/detail/flat_detail_state.dart';
@@ -18,15 +19,17 @@ class FlatDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: _viewModel,
-      child: Scaffold(
-        appBar: RentAppBar(title: flat.address),
-        body: FlatDetailList(flat: flat),
-        floatingActionButton: Consumer<FlatDetailViewModel>(
-          builder: (context, model, _) => model.state is FlatDetailLoaded
-              ? _renderAddGroupButton(context)
-              : const Stack(),
+      child: AuthAwareWidget(
+        child: Scaffold(
+          appBar: RentAppBar(context, title: flat.address),
+          body: FlatDetailList(flat: flat),
+          floatingActionButton: Consumer<FlatDetailViewModel>(
+            builder: (context, model, _) => model.state is FlatDetailLoaded
+                ? _renderAddGroupButton(context)
+                : const Stack(),
+          ),
         ),
-      ),
+      )
     );
   }
 
