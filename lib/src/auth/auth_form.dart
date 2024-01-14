@@ -72,6 +72,7 @@ class _AuthFormState extends State<AuthForm> {
         .login(_loginController.text, _passwordController.text);
 
     if (context.mounted) {
+      Navigator.of(context).pop();
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => const FlatsScreen())
       );
