@@ -38,9 +38,16 @@ class FlatDetailScreen extends StatelessWidget {
   void _onAddGroupPressed(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (context) => ChangeNotifierProvider.value(
           value: _viewModel,
-          child: const GroupAddScreen()
+          child: DraggableScrollableSheet(
+            maxChildSize: 0.7,
+            minChildSize: 0.7,
+            initialChildSize: 0.7,
+            expand: false,
+            builder: (context, _) => const GroupAddScreen(),
+          )
       )
     );
   }

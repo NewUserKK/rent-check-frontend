@@ -35,16 +35,22 @@ class _GroupSearchListState extends ViewModelWidgetState<
   };
 
   Widget _buildList(GroupSearchListLoaded state) {
-    return Expanded(child: ListView.builder(
-      itemCount: state.groups.length,
-      padding: const EdgeInsets.all(16.0),
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        final group = state.groups[index];
-        return ListTile(
-          title: Text(group.title),
-        );
-      },
-    ));
+    final sliverList = SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            final group = state.groups[index];
+            return ListTile(
+              title: Text(group.title),
+            );
+          },
+          childCount: state.groups.length,
+        )
+    );
+
+    return Expanded(
+        child: CustomScrollView(
+          slivers: [sliverList],
+        )
+    );
   }
 }
