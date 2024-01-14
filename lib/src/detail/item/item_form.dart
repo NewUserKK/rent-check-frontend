@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_checklist/src/common/widgets/form_builder.dart';
 import 'package:rent_checklist/src/common/widgets/snackbar.dart';
-import 'package:rent_checklist/src/details/flat_detail_view_model.dart';
-import 'package:rent_checklist/src/details/group/group_model.dart';
+import 'package:rent_checklist/src/detail/flat_detail_view_model.dart';
+import 'package:rent_checklist/src/detail/item/item_model.dart';
 import 'package:rent_checklist/src/res/strings.dart';
 
-class GroupForm extends StatefulWidget {
-  const GroupForm({super.key});
+class ItemForm extends StatefulWidget {
+  final int groupId;
+
+  const ItemForm({super.key, required this.groupId});
 
   @override
-  State<StatefulWidget> createState() => _GroupFormState();
+  State<StatefulWidget> createState() => _ItemFormState();
 }
 
-class _GroupFormState extends State<GroupForm> {
+class _ItemFormState extends State<ItemForm> {
   final _titleController = TextEditingController();
 
   var _submitEnabled = true;
@@ -34,10 +36,10 @@ class _GroupFormState extends State<GroupForm> {
   @override
   Widget build(BuildContext context) {
     return FormBuilder(context)
-        .title(Strings.groupFormTitle)
+        .title(Strings.itemFormTitle)
         .fields([
           InputField(
-            name: Strings.groupFormFieldTitle,
+            name: Strings.itemFormFieldTitle,
             controller: _titleController,
             required: true,
           ),
@@ -47,7 +49,7 @@ class _GroupFormState extends State<GroupForm> {
   }
 
   void _submit() async {
-    final group = GroupModel(
+    final item = ItemModel(
       title: _titleController.text.trim(),
     );
 
@@ -56,10 +58,10 @@ class _GroupFormState extends State<GroupForm> {
     try {
       await Provider
           .of<FlatDetailViewModel>(context, listen: false)
-          .createAndAddGroup(group);
+          .createAndAddItem(widget.groupId, item);
     } catch (e) {
       if (context.mounted) {
-        showSnackBar(context, "Group add error: $e");
+        showSnackBar(context, "Item add error: $e");
       }
     } finally {
       _setButtonEnabled(true);

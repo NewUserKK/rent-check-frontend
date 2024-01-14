@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:rent_checklist/src/details/group/group_model.dart';
-import 'package:rent_checklist/src/details/item/item_model.dart';
+import 'package:rent_checklist/src/detail/group/group_model.dart';
+import 'package:rent_checklist/src/detail/item/item_model.dart';
 
 part 'generated/flat_detail_model.freezed.dart';
 

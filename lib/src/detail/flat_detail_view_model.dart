@@ -1,12 +1,12 @@
 import 'package:rent_checklist/src/common/arch/view_model.dart';
 import 'package:rent_checklist/src/common/utils/extensions.dart';
 import 'package:rent_checklist/src/common/widgets/debouncer.dart';
-import 'package:rent_checklist/src/details/flat_detail_facade.dart';
-import 'package:rent_checklist/src/details/flat_detail_state.dart';
-import 'package:rent_checklist/src/details/group/group_api.dart';
-import 'package:rent_checklist/src/details/group/group_model.dart';
-import 'package:rent_checklist/src/details/item/item_api.dart';
-import 'package:rent_checklist/src/details/item/item_model.dart';
+import 'package:rent_checklist/src/detail/flat_detail_facade.dart';
+import 'package:rent_checklist/src/detail/flat_detail_state.dart';
+import 'package:rent_checklist/src/detail/group/group_api.dart';
+import 'package:rent_checklist/src/detail/group/group_model.dart';
+import 'package:rent_checklist/src/detail/item/item_api.dart';
+import 'package:rent_checklist/src/detail/item/item_model.dart';
 import 'package:rent_checklist/src/flat/flat_api.dart';
 import 'package:rent_checklist/src/flat/flat_model.dart';
 

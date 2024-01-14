@@ -4,10 +4,10 @@ import 'package:rent_checklist/src/common/arch/view_model_widget_state.dart';
 import 'package:rent_checklist/src/common/widgets/load_utils.dart';
 import 'package:rent_checklist/src/common/widgets/loader.dart';
 import 'package:rent_checklist/src/common/widgets/snackbar.dart';
-import 'package:rent_checklist/src/details/flat_detail_view_model.dart';
-import 'package:rent_checklist/src/details/group/add/group_search_list_state.dart';
-import 'package:rent_checklist/src/details/group/add/group_search_list_view_model.dart';
-import 'package:rent_checklist/src/details/group/group_model.dart';
+import 'package:rent_checklist/src/detail/flat_detail_view_model.dart';
+import 'package:rent_checklist/src/detail/group/add/group_search_list_state.dart';
+import 'package:rent_checklist/src/detail/group/add/group_search_list_view_model.dart';
+import 'package:rent_checklist/src/detail/group/group_model.dart';
 
 class GroupSearchList extends StatefulWidget {
   const GroupSearchList({super.key});

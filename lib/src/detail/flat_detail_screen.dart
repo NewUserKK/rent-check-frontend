@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_checklist/src/common/widgets/app_bar.dart';
-import 'package:rent_checklist/src/details/flat_detail_list.dart';
-import 'package:rent_checklist/src/details/flat_detail_state.dart';
-import 'package:rent_checklist/src/details/flat_detail_view_model.dart';
-import 'package:rent_checklist/src/details/group/add/group_add_screen.dart';
+import 'package:rent_checklist/src/detail/flat_detail_list.dart';
+import 'package:rent_checklist/src/detail/flat_detail_state.dart';
+import 'package:rent_checklist/src/detail/flat_detail_view_model.dart';
+import 'package:rent_checklist/src/detail/group/add/group_add_screen.dart';
 import 'package:rent_checklist/src/flat/flat_model.dart';
 
 class FlatDetailScreen extends StatelessWidget {

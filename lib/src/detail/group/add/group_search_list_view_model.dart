@@ -1,6 +1,6 @@
 import 'package:rent_checklist/src/common/arch/view_model.dart';
-import 'package:rent_checklist/src/details/group/add/group_search_list_state.dart';
-import 'package:rent_checklist/src/details/group/group_api.dart';
+import 'package:rent_checklist/src/detail/group/add/group_search_list_state.dart';
+import 'package:rent_checklist/src/detail/group/group_api.dart';
 
 sealed class GroupSearchListViewEvent {}
 

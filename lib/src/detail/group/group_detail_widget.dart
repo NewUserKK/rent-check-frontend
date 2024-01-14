@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rent_checklist/src/details/flat_detail_model.dart';
-import 'package:rent_checklist/src/details/flat_detail_view_model.dart';
-import 'package:rent_checklist/src/details/item/item_form.dart';
-import 'package:rent_checklist/src/details/item/item_widget.dart';
+import 'package:rent_checklist/src/detail/flat_detail_model.dart';
+import 'package:rent_checklist/src/detail/flat_detail_view_model.dart';
+import 'package:rent_checklist/src/detail/item/item_form.dart';
+import 'package:rent_checklist/src/detail/item/item_widget.dart';
 
 class GroupWidget extends StatelessWidget {
   final FlatDetailGroup groupDetails;

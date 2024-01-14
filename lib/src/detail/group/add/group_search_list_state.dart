@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:rent_checklist/src/details/group/group_model.dart';
+import 'package:rent_checklist/src/detail/group/group_model.dart';
 
 part 'generated/group_search_list_state.freezed.dart';
 

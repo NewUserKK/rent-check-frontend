@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rent_checklist/src/common/utils/extensions.dart';
 import 'package:rent_checklist/src/common/widgets/load_utils.dart';
-import 'package:rent_checklist/src/details/flat_detail_screen.dart';
+import 'package:rent_checklist/src/detail/flat_detail_screen.dart';
 import 'package:rent_checklist/src/flat/flat_api.dart';
 import 'package:rent_checklist/src/flat/flat_model.dart';
 

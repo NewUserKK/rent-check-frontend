@@ -1,7 +1,7 @@
 import 'package:rent_checklist/src/common/experiments/features.dart';
 import 'package:rent_checklist/src/common/network/api_utils.dart';
 import 'package:rent_checklist/src/common/network/client.dart';
-import 'package:rent_checklist/src/details/item/item_model.dart';
+import 'package:rent_checklist/src/detail/item/item_model.dart';
 
 abstract interface class ItemApi {
   Future<void> changeStatus(

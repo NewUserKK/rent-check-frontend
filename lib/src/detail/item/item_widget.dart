@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rent_checklist/src/details/flat_detail_view_model.dart';
-import 'package:rent_checklist/src/details/group/group_model.dart';
-import 'package:rent_checklist/src/details/item/item_model.dart';
+import 'package:rent_checklist/src/detail/flat_detail_view_model.dart';
+import 'package:rent_checklist/src/detail/group/group_model.dart';
+import 'package:rent_checklist/src/detail/item/item_model.dart';
 
 class ItemWidget extends StatelessWidget {
   final GroupModel group;

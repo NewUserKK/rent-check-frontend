@@ -1,11 +1,11 @@
 import 'package:rent_checklist/src/common/utils/extensions.dart';
-import 'package:rent_checklist/src/details/flat_detail_model.dart';
-import 'package:rent_checklist/src/details/item/item_api.dart';
-import 'package:rent_checklist/src/details/network/flat_detail_items_response.dart';
+import 'package:rent_checklist/src/detail/flat_detail_model.dart';
+import 'package:rent_checklist/src/detail/item/item_api.dart';
+import 'package:rent_checklist/src/detail/network/flat_detail_items_response.dart';
 import 'package:rent_checklist/src/flat/flat_api.dart';
-import 'package:rent_checklist/src/details/group/group_api.dart';
-import 'package:rent_checklist/src/details/group/group_model.dart';
-import 'package:rent_checklist/src/details/item/item_model.dart';
+import 'package:rent_checklist/src/detail/group/group_api.dart';
+import 'package:rent_checklist/src/detail/group/group_model.dart';
+import 'package:rent_checklist/src/detail/item/item_model.dart';
 
 class FlatDetailFacade {
   final FlatApi _flatApi;
