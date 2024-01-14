@@ -2,6 +2,7 @@ import 'package:rent_checklist/src/auth/network/auth_api.dart';
 import 'package:rent_checklist/src/auth/auth_state.dart';
 import 'package:rent_checklist/src/auth/network/auth_credentials_request.dart';
 import 'package:rent_checklist/src/common/arch/view_model.dart';
+import 'package:rent_checklist/src/common/experiments/features.dart';
 
 class AuthEvent {}
 
@@ -25,7 +26,11 @@ class AuthModel extends ViewModel<AuthState, AuthEvent> {
       ));
       setState(Authorized(token: authResponse.token));
     } catch (e) {
-      setState(NotAuthorized());
+      if (Features.useTestAuth.isEnabled) {
+        setState(const Authorized(token: 'test2'));
+      } else {
+        setState(NotAuthorized());
+      }
     }
   }
 
