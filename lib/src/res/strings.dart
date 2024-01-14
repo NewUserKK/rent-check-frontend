@@ -8,6 +8,7 @@ class Strings {
   static const String authFormLoginButton = "Login";
 
   static const String flatListToolbarTitle = "Flats";
+  static const String flatDelete = "Delete";
 
   static const String flatAddToolbarTitle = "Add flat";
 
