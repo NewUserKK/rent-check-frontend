@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_checklist/src/detail/flat_detail_model.dart';
 import 'package:rent_checklist/src/detail/flat_detail_view_model.dart';
-import 'package:rent_checklist/src/detail/item/item_form.dart';
+import 'package:rent_checklist/src/detail/item/add/item_add_screen.dart';
 import 'package:rent_checklist/src/detail/item/item_widget.dart';
 
 class GroupWidget extends StatelessWidget {
@@ -50,11 +50,18 @@ class GroupWidget extends StatelessWidget {
     final viewModel = Provider.of<FlatDetailViewModel>(context, listen: false);
     showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: (context) => ChangeNotifierProvider.value(
             value: viewModel,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ItemForm(groupId: groupId),
+            child: DraggableScrollableSheet(
+                maxChildSize: 0.7,
+                minChildSize: 0.7,
+                initialChildSize: 0.7,
+                expand: false,
+                builder: (context, _) => Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ItemAddScreen(groupId: groupId),
+                )
             )
         )
     );

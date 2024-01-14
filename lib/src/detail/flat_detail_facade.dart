@@ -79,4 +79,16 @@ class FlatDetailFacade {
     await _groupApi.addItemToGroup(flatId, groupId, newItem.id);
     return ItemWithStatus(item: newItem, status: ItemStatus.unset);
   }
+
+  Future<ItemWithStatus> addItemToFlat({
+    required int flatId,
+    required int groupId,
+    required ItemModel item,
+  }) async {
+    await _groupApi.addItemToGroup(flatId, groupId, item.id);
+    return ItemWithStatus(
+        item: item,
+        status: ItemStatus.unset
+    );
+  }
 }
