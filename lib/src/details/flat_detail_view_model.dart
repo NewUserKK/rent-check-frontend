@@ -102,6 +102,28 @@ class FlatDetailViewModel extends ViewModel<
     ));
   }
 
+  Future<void> addGroup(GroupModel group) async {
+    if (this.state is! FlatDetailLoaded) {
+      return;
+    }
+
+    final state = this.state as FlatDetailLoaded;
+
+    final newGroupDetails = await _facade.addGroupToFlat(
+      flatId: flat.id,
+      group: group
+    );
+
+    setState(state.copyWith(
+        model: state.model.copyWith(
+            groups: state.model.groups.set(
+                newGroupDetails.group.id,
+                newGroupDetails
+            )
+        )
+    ));
+  }
+
   Future<void> createAndAddItem(int groupId, ItemModel item) async {
     if (this.state is! FlatDetailLoaded) {
       return;

@@ -59,6 +59,17 @@ class FlatDetailFacade {
     );
   }
 
+  Future<FlatDetailGroup> addGroupToFlat({
+    required int flatId,
+    required GroupModel group,
+  }) async {
+    await _flatApi.addGroupToFlat(flatId, group.id);
+    return FlatDetailGroup(
+        group: group,
+        items: {}
+    );
+  }
+
   Future<ItemWithStatus> createAndAddItem({
     required int flatId,
     required int groupId,
