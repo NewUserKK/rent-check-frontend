@@ -76,7 +76,7 @@ class _FlatFormState extends State<FlatForm> {
       if (context.mounted) {
         showSnackBar(context, "Flat added: $addedFlat");
         Navigator.pop(context);
-        _navigateToFlatDetail(context, flat);
+        _navigateToFlatDetail(context, addedFlat);
       }
     } on NetworkError catch (e) {
       if (context.mounted) {
