@@ -12,17 +12,33 @@ class ItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: _getItemColor(),
-      child: InkWell(
-        onTap: () => _changeStatus(context),
-        child: Padding(
-            padding: const EdgeInsets.symmetric(
-                vertical: 16.0,
-                horizontal: 8.0,
-            ),
-            child: Text(item.item.title)
-        ),
+    return InkWell(
+      onTap: () => _changeStatus(context),
+      child: Padding(
+          padding: const EdgeInsets.symmetric(
+              vertical: 16.0,
+              horizontal: 8.0,
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1.0),
+                  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                  color: _getItemColor(),
+                ),
+              ),
+              const SizedBox(
+                width: 12.0, height: 0,
+              ),
+              Text(
+                item.item.title,
+                style: Theme.of(context).textTheme.bodyLarge,
+              )
+            ],
+          )
       ),
     );
   }
