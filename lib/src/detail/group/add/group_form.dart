@@ -14,6 +14,8 @@ class GroupForm extends StatefulWidget {
 }
 
 class _GroupFormState extends State<GroupForm> {
+  final formKey = GlobalKey<FormState>();
+
   final _titleController = TextEditingController();
 
   var _submitEnabled = true;
@@ -33,7 +35,7 @@ class _GroupFormState extends State<GroupForm> {
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilder(context)
+    return FormBuilder(context, formKey)
         .title(Strings.groupFormTitle)
         .fields([
           InputField(

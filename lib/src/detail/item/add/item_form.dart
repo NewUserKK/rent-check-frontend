@@ -16,6 +16,8 @@ class ItemForm extends StatefulWidget {
 }
 
 class _ItemFormState extends State<ItemForm> {
+  final formKey = GlobalKey<FormState>();
+
   final _titleController = TextEditingController();
 
   var _submitEnabled = true;
@@ -35,7 +37,7 @@ class _ItemFormState extends State<ItemForm> {
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilder(context)
+    return FormBuilder(context, formKey)
         .title(Strings.itemFormTitle)
         .fields([
           InputField(

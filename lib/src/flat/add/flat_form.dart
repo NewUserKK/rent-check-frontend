@@ -16,6 +16,8 @@ class FlatForm extends StatefulWidget {
 }
 
 class _FlatFormState extends State<FlatForm> {
+  final formKey = GlobalKey<FormState>();
+
   final _addressController = TextEditingController();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -39,7 +41,7 @@ class _FlatFormState extends State<FlatForm> {
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilder(context)
+    return FormBuilder(context, formKey)
         .fields([
           InputField(
             name: Strings.flatFormFieldAddress,

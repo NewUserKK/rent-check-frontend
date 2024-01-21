@@ -51,14 +51,14 @@ class SubmitButton with _$SubmitButton {
 class FormBuilder {
   final BuildContext context;
 
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey;
 
   String? _title;
 
   final _fields = <InputField>[];
   final _submitButtons = <SubmitButton>[];
 
-  FormBuilder(this.context);
+  FormBuilder(this.context, this.formKey);
 
   FormBuilder title(String title) {
     _title = title;
@@ -77,7 +77,7 @@ class FormBuilder {
 
   Form build() {
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Wrap(
         runSpacing: 12.0,
         alignment: WrapAlignment.end,
@@ -144,7 +144,7 @@ class FormBuilder {
     }
 
     final onPressed = button.onSubmitProvider()?.let((submitFn) => () {
-      if (!_formKey.currentState!.validate()) {
+      if (!formKey.currentState!.validate()) {
         return;
       }
 

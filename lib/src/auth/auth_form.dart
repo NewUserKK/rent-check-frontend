@@ -23,6 +23,8 @@ class _AuthFormState extends ViewModelWidgetState<
     AuthEvent,
     AuthModel
 > {
+  final formKey = GlobalKey<FormState>();
+
   final TextEditingController _loginController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -38,7 +40,7 @@ class _AuthFormState extends ViewModelWidgetState<
   @override
   Widget render(AuthState state) => switch (state) {
     Authorized _ => _onAuthorized(),
-    NotAuthorized _ => FormBuilder(context)
+    NotAuthorized _ => FormBuilder(context, formKey)
         .title(Strings.authTitle)
         .fields([
           InputField(
