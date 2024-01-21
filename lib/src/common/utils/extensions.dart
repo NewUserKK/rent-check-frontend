@@ -33,7 +33,7 @@ extension RemoveNulls on Map<String, dynamic> {
   }
 }
 
-extension SetMap<K, V> on Map<K, V> {
+extension MapUtils<K, V> on Map<K, V> {
   Map<K, V> modify(K key, V Function(V) valueTransformer) {
     final copy = Map<K, V>.from(this);
     final item = copy[key]!;
@@ -44,6 +44,12 @@ extension SetMap<K, V> on Map<K, V> {
   Map<K, V> set(K key, V value) {
     final copy = Map<K, V>.from(this);
     copy[key] = value;
+    return copy;
+  }
+
+  Map<K, V> delete(K key) {
+    final copy = Map<K, V>.from(this);
+    copy.remove(key);
     return copy;
   }
 }

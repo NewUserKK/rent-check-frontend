@@ -8,6 +8,7 @@ import 'flat_model.dart';
 abstract interface class FlatApi {
   Future<List<FlatModel>> getFlats();
   Future<FlatModel> createFlat(FlatModel flat);
+  Future<void> deleteFlat(int flatId);
   Future<List<FlatDetailItemsResponse>> getItems(int flatId);
   Future<void> addGroupToFlat(int flatId, int groupId);
 }
@@ -31,6 +32,12 @@ class NetworkFlatApi implements FlatApi {
         () => kClient.post('flats', data: flat.toJson()));
     return FlatModel.fromJson(json);
   }
+
+  @override
+  Future<void> deleteFlat(int flatId) async {
+    await request(() => kClient.delete('flats/$flatId'));
+  }
+
 
   @override
   Future<List<FlatDetailItemsResponse>> getItems(int flatId) async {
@@ -83,6 +90,10 @@ class FakeFlatApi implements FlatApi {
 
     final json = await requestAndDecode(() => Future.value(response));
     return FlatModel.fromJson(json);
+  }
+
+  @override
+  Future<void> deleteFlat(int flatId) async {
   }
 
   @override

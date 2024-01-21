@@ -38,4 +38,18 @@ class FlatsViewModel extends ViewModel<FlatsState, FlatsEvent> {
 
     return newFlat;
   }
+
+  Future<void> deleteFlat(FlatModel flat) async {
+    if (this.state is! FlatsStateLoaded) {
+      return;
+    }
+
+    final state = this.state as FlatsStateLoaded;
+
+    await _flatApi.deleteFlat(flat.id);
+
+    setState(state.copyWith(
+      flats: state.flats.delete(flat.id)
+    ));
+  }
 }

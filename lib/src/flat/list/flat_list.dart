@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rent_checklist/src/common/arch/view_model_widget_state.dart';
 import 'package:rent_checklist/src/common/utils/extensions.dart';
 import 'package:rent_checklist/src/common/widgets/load_utils.dart';
@@ -69,16 +70,16 @@ class _FlatListState extends ViewModelWidgetState<
       itemBuilder: (context, index) {
         final flat = flatList[index];
 
-        final title = flat.title ?? flat.address;
+        final title = flat.title.takeIfNotBlank() ?? flat.address;
 
         var isThreeLine = false;
         String? subtitle;
-        if (flat.title != null && flat.description != null) {
+        if (flat.title?.isNotEmpty == true && flat.description?.isNotEmpty == true) {
           isThreeLine = true;
           subtitle = "${flat.address}\n${flat.description}";
-        } else if (flat.title != null) {
+        } else if (flat.title?.isNotEmpty == true) {
           subtitle = flat.address;
-        } else if (flat.description != null) {
+        } else if (flat.description?.isNotEmpty == true) {
           subtitle = flat.description;
         }
 
@@ -93,14 +94,7 @@ class _FlatListState extends ViewModelWidgetState<
     );
   }
 
-  void _navigateToFlatDetail(BuildContext context, FlatModel flat) {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => FlatDetailScreen(flat: flat))
-    );
-  }
-
   void _openContextMenu(String title, FlatModel flat) {
-    // show menu with position at screen center
     showDialog(
       context: context,
       builder: (context) => SimpleDialog(
@@ -113,7 +107,7 @@ class _FlatListState extends ViewModelWidgetState<
             child: Column(
               children: [
                 TextButton(
-                  onPressed: () => {},
+                  onPressed: () => _deleteFlat(flat),
                   child: _contextMenuButton(Strings.flatContextMenuDelete)
                 ),
               ],
@@ -138,5 +132,18 @@ class _FlatListState extends ViewModelWidgetState<
           ),
         ]
     );
+  }
+
+  void _navigateToFlatDetail(BuildContext context, FlatModel flat) {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => FlatDetailScreen(flat: flat))
+    );
+  }
+
+  Future<void> _deleteFlat(FlatModel flat) async {
+    await Provider.of<FlatsViewModel>(context, listen: false).deleteFlat(flat);
+    if (context.mounted) {
+      Navigator.of(context).pop();
+    }
   }
 }
