@@ -11,7 +11,8 @@ class Strings {
   static const String authFormLoginError = "Invalid user or password";
 
   static const String flatListToolbarTitle = "Flats";
-  static const String flatDelete = "Delete";
+  static const String flatListEmptyMessage = "Add flat by clicking + button below";
+  static const String flatContextMenuDelete = "Delete";
 
   static const String flatAddToolbarTitle = "Add flat";
 

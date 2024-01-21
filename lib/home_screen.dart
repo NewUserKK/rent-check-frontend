@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return renderOnLoad(
         _authRestoreJob,
-        (restored) => restored ? const FlatsScreen() : const AuthScreen()
+        (restored) => restored ? FlatsScreen() : const AuthScreen()
     );
   }
 }

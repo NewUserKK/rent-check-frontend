@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rent_checklist/src/common/network/api_utils.dart';
 import 'package:rent_checklist/src/common/widgets/form_builder.dart';
 import 'package:rent_checklist/src/common/widgets/snackbar.dart';
 import 'package:rent_checklist/src/detail/flat_detail_screen.dart';
-import 'package:rent_checklist/src/flat/flat_api.dart';
+import 'package:rent_checklist/src/flat/flats_view_model.dart';
 import 'package:rent_checklist/src/flat/flat_model.dart';
 import 'package:rent_checklist/src/res/strings.dart';
 
@@ -18,8 +19,6 @@ class _FlatFormState extends State<FlatForm> {
   final _addressController = TextEditingController();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
-
-  final _flatApi = FlatApiFactory.create();
 
   var _submitEnabled = true;
 
@@ -72,11 +71,13 @@ class _FlatFormState extends State<FlatForm> {
     _setButtonEnabled(false);
 
     try {
-      var addedFlat = await _flatApi.createFlat(flat);
+      final newFlat = await Provider
+          .of<FlatsViewModel>(context, listen: false)
+          .createFlat(flat);
+
       if (context.mounted) {
-        showSnackBar(context, "Flat added: $addedFlat");
         Navigator.pop(context);
-        _navigateToFlatDetail(context, addedFlat);
+        _navigateToFlatDetail(context, newFlat);
       }
     } on NetworkError catch (e) {
       if (context.mounted) {

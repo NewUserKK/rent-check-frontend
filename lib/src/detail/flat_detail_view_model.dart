@@ -92,13 +92,11 @@ class FlatDetailViewModel extends ViewModel<
 
     final newGroupDetails = await _facade.createAndAddGroup(flat.id, group);
 
-    setState(state.copyWith(
-        model: state.model.copyWith(
-            groups: state.model.groups.set(
-                newGroupDetails.group.id,
-                newGroupDetails
-            )
-        )
+    setState(state.copyWith.model(
+      groups: state.model.groups.set(
+          newGroupDetails.group.id,
+          newGroupDetails
+      )
     ));
   }
 
@@ -114,13 +112,11 @@ class FlatDetailViewModel extends ViewModel<
       group: group
     );
 
-    setState(state.copyWith(
-        model: state.model.copyWith(
-            groups: state.model.groups.set(
-                newGroupDetails.group.id,
-                newGroupDetails
-            )
-        )
+    setState(state.copyWith.model(
+      groups: state.model.groups.set(
+          newGroupDetails.group.id,
+          newGroupDetails
+      )
     ));
   }
 
@@ -137,15 +133,13 @@ class FlatDetailViewModel extends ViewModel<
         item: item
     );
 
-    final newModel = state.copyWith(
-        model: state.model.copyWith(
-            groups: state.model.groups.modify(
-                groupId,
-                (group) => group.copyWith(
-                    items: group.items.set(newItem.item.id, newItem)
-                )
-            )
-        )
+    final newModel = state.copyWith.model(
+        groups: state.model.groups.modify(
+          groupId,
+          (group) => group.copyWith(
+              items: group.items.set(newItem.item.id, newItem)
+          )
+      )
     );
 
     setState(newModel);
@@ -164,15 +158,13 @@ class FlatDetailViewModel extends ViewModel<
         item: item
     );
 
-    final newModel = state.copyWith(
-        model: state.model.copyWith(
-            groups: state.model.groups.modify(
-                groupId,
-                    (group) => group.copyWith(
-                    items: group.items.set(newItem.item.id, newItem)
-                )
-            )
-        )
+    final newModel = state.copyWith.model(
+      groups: state.model.groups.modify(
+          groupId,
+          (group) => group.copyWith(
+              items: group.items.set(newItem.item.id, newItem)
+          )
+      )
     );
 
     setState(newModel);

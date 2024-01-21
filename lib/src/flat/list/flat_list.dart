@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:rent_checklist/src/common/arch/view_model_widget_state.dart';
 import 'package:rent_checklist/src/common/utils/extensions.dart';
 import 'package:rent_checklist/src/common/widgets/load_utils.dart';
+import 'package:rent_checklist/src/common/widgets/loader.dart';
 import 'package:rent_checklist/src/detail/flat_detail_screen.dart';
-import 'package:rent_checklist/src/flat/flat_api.dart';
+import 'package:rent_checklist/src/flat/flats_state.dart';
+import 'package:rent_checklist/src/flat/flats_view_model.dart';
 import 'package:rent_checklist/src/flat/flat_model.dart';
 import 'package:rent_checklist/src/res/strings.dart';
 
@@ -13,27 +16,58 @@ class FlatList extends StatefulWidget {
   State<StatefulWidget> createState() => _FlatListState();
 }
 
-class _FlatListState extends State<FlatList> {
-  late Future<List<FlatModel>> flats;
-
-  final _api = FlatApiFactory.create();
-
+class _FlatListState extends ViewModelWidgetState<
+  FlatList,
+  FlatsState,
+  FlatsEvent,
+  FlatsViewModel
+> {
   @override
   void initState() {
     super.initState();
-    flats = _api.getFlats();
+    withProviderOnFrame<FlatsViewModel>(context, (viewModel) => viewModel.load());
   }
 
   @override
-  Widget build(BuildContext context) {
-    return renderOnLoad(flats, (data) => _buildList(data));
-  }
+  void handleEvent(FlatsEvent event) {}
 
-  Widget _buildList(List<FlatModel> flats) {
+  @override
+  Widget render(FlatsState state) => switch (state) {
+    FlatsStateLoading _ => const Loader(),
+    FlatsStateLoaded state => _buildList(state.flats),
+    FlatsStateError state => Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Center(
+          child: Text(
+            state.error.toString(),
+            textAlign: TextAlign.center,
+          )
+      ),
+    ),
+  };
+
+  Widget _buildList(Map<int, FlatModel> flats) {
+    final flatList = flats.values.toList();
+
+    if (flatList.isEmpty) {
+      return const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Center(
+          child: Text(
+            Strings.flatListEmptyMessage,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 18.0,
+            ),
+          ),
+        ),
+      );
+    }
+
     return ListView.builder(
       itemCount: flats.length,
       itemBuilder: (context, index) {
-        final flat = flats[index];
+        final flat = flatList[index];
 
         final title = flat.title ?? flat.address;
 
@@ -80,7 +114,7 @@ class _FlatListState extends State<FlatList> {
               children: [
                 TextButton(
                   onPressed: () => {},
-                  child: _contextMenuButton(Strings.flatDelete)
+                  child: _contextMenuButton(Strings.flatContextMenuDelete)
                 ),
               ],
             ),
