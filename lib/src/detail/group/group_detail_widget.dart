@@ -5,6 +5,7 @@ import 'package:rent_checklist/src/detail/flat_detail_view_model.dart';
 import 'package:rent_checklist/src/detail/group/group_model.dart';
 import 'package:rent_checklist/src/detail/item/add/item_add_screen.dart';
 import 'package:rent_checklist/src/detail/item/item_widget.dart';
+import 'package:rent_checklist/src/res/strings.dart';
 
 class GroupWidget extends StatelessWidget {
   final FlatDetailGroup groupDetails;
@@ -78,7 +79,26 @@ class GroupWidget extends StatelessWidget {
   }
 
   void _onDeleteClicked(BuildContext context, GroupModel group) {
-    Provider.of<FlatDetailViewModel>(context, listen: false)
-        .deleteGroupFromFlat(group);
+    final viewModel = Provider.of<FlatDetailViewModel>(context, listen: false);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Center(child: Text(Strings.groupDeleteDialogTitle)),
+        actionsAlignment: MainAxisAlignment.spaceBetween,
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text(Strings.groupDeleteDialogCancel),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              viewModel.deleteGroupFromFlat(group);
+              Navigator.of(context).pop();
+            },
+            child: const Text(Strings.groupDeleteDialogConfirm),
+          )
+        ],
+      )
+    );
   }
 }
