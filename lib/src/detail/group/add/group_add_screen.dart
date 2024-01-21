@@ -16,6 +16,10 @@ class GroupAddScreen extends StatelessWidget {
         child: Column(
           children: [
             const GroupForm(),
+            const SizedBox(
+              width: 0,
+              height: 12.0,
+            ),
             ChangeNotifierProvider(
               create: (context) => GroupSearchListViewModel(),
               child: const GroupSearchList(),

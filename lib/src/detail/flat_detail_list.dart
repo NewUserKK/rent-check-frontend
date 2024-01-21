@@ -7,6 +7,7 @@ import 'package:rent_checklist/src/detail/flat_detail_state.dart';
 import 'package:rent_checklist/src/detail/flat_detail_view_model.dart';
 import 'package:rent_checklist/src/flat/flat_model.dart';
 import 'package:rent_checklist/src/detail/group/group_detail_widget.dart';
+import 'package:rent_checklist/src/res/strings.dart';
 
 class FlatDetailList extends StatefulWidget {
   final FlatModel flat;
@@ -45,6 +46,14 @@ class _FlatDetailListState extends ViewModelWidgetState<
 
   Widget _buildList(FlatDetailLoaded state) {
     final groupList = state.model.groups.values.toList();
+
+    if (groupList.isEmpty) {
+      return const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Center(child: Text(Strings.groupListEmptyMessage)),
+      );
+    }
+
     return ListView.builder(
       itemCount: state.model.groups.length,
       padding: const EdgeInsets.all(16.0),

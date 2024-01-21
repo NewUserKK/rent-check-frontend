@@ -18,6 +18,10 @@ class ItemAddScreen extends StatelessWidget {
         child: Column(
           children: [
             ItemForm(groupId: groupId),
+            const SizedBox(
+              width: 0,
+              height: 12.0,
+            ),
             ChangeNotifierProvider(
               create: (context) => ItemSearchListViewModel(),
               child: ItemSearchList(groupId: groupId),

@@ -25,6 +25,7 @@ class Strings {
 
   static const String groupFormTitle = "Add group";
   static const String groupFormFieldTitle = "Title";
+  static const String groupListEmptyMessage = "Add group by clicking + button below";
 
   static const String itemFormTitle = "Add item";
   static const String itemFormFieldTitle = "Title";
