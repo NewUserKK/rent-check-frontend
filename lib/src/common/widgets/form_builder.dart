@@ -91,7 +91,9 @@ class FormBuilder {
           ),
           ..._fields.map((e) => _inputField(e)),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: _submitButtons.length == 1
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.spaceBetween,
             children: _submitButtons.map((e) => _constructButton(e)).toList(),
           ),
         ].whereType<Widget>().toList(),
