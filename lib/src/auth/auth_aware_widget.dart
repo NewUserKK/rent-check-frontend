@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rent_checklist/home_screen.dart';
 import 'package:rent_checklist/src/auth/auth_model.dart';
-import 'package:rent_checklist/src/auth/auth_screen.dart';
 import 'package:rent_checklist/src/auth/auth_state.dart';
 import 'package:rent_checklist/src/common/widgets/load_utils.dart';
 
@@ -20,7 +20,7 @@ class AuthAwareWidget extends StatelessWidget {
             navigator.popUntil((route) => route.isFirst);
             navigator.pop();
             navigator.push(
-                MaterialPageRoute(builder: (context) => const AuthScreen())
+                MaterialPageRoute(builder: (context) => const HomeScreen())
             );
           }
         });

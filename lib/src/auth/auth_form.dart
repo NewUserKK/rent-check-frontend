@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rent_checklist/home_screen.dart';
 import 'package:rent_checklist/src/auth/auth_model.dart';
+import 'package:rent_checklist/src/auth/auth_state.dart';
+import 'package:rent_checklist/src/common/arch/view_model_widget_state.dart';
 import 'package:rent_checklist/src/common/widgets/form_builder.dart';
-import 'package:rent_checklist/src/flat/list/flats_screen.dart';
+import 'package:rent_checklist/src/common/widgets/load_utils.dart';
+import 'package:rent_checklist/src/common/widgets/loader.dart';
+import 'package:rent_checklist/src/common/widgets/snackbar.dart';
 import 'package:rent_checklist/src/res/strings.dart';
 
 class AuthForm extends StatefulWidget {
@@ -12,7 +17,12 @@ class AuthForm extends StatefulWidget {
   State<AuthForm> createState() => _AuthFormState();
 }
 
-class _AuthFormState extends State<AuthForm> {
+class _AuthFormState extends ViewModelWidgetState<
+    AuthForm,
+    AuthState,
+    AuthEvent,
+    AuthModel
+> {
   final TextEditingController _loginController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -26,8 +36,9 @@ class _AuthFormState extends State<AuthForm> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return FormBuilder(context)
+  Widget render(AuthState state) => switch (state) {
+    Authorized _ => _onAuthorized(),
+    NotAuthorized _ => FormBuilder(context)
         .title(Strings.authTitle)
         .fields([
           InputField(
@@ -38,6 +49,7 @@ class _AuthFormState extends State<AuthForm> {
           InputField(
             name: Strings.authFormFieldPassword,
             controller: _passwordController,
+            obscureText: true,
             required: true,
           ),
         ])
@@ -51,8 +63,27 @@ class _AuthFormState extends State<AuthForm> {
               onSubmitProvider: () => _submitEnabled ? _login : null
           ),
         ])
-        .build();
+        .build()
+  };
+
+  Widget _onAuthorized() {
+    doOnPostFrame(context, () {
+        Navigator.of(context).pop();
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const HomeScreen())
+        );
+    });
+
+    return const Loader();
   }
+
+  @override
+  void handleEvent(AuthEvent event) => switch (event) {
+    AuthEventRegistrationSuccess _ =>
+        showSnackBar(context, Strings.authFormRegisterSuccess),
+    AuthEventRegistrationFailed e =>
+        showSnackBar(context, "${Strings.authFormRegisterError}: ${e.error}")
+  };
 
   void _register() async {
     _setButtonsEnabled(false);
@@ -70,13 +101,6 @@ class _AuthFormState extends State<AuthForm> {
     await Provider
         .of<AuthModel>(context, listen: false)
         .login(_loginController.text, _passwordController.text);
-
-    if (context.mounted) {
-      Navigator.of(context).pop();
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const FlatsScreen())
-      );
-    }
 
     _setButtonsEnabled(true);
   }

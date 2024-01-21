@@ -6,6 +6,8 @@ class Strings {
   static const String authFormFieldPassword = "password";
   static const String authFormRegisterButton = "Register";
   static const String authFormLoginButton = "Login";
+  static const String authFormRegisterSuccess = "Registered successfully!";
+  static const String authFormRegisterError = "Registration error";
 
   static const String flatListToolbarTitle = "Flats";
   static const String flatDelete = "Delete";

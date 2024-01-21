@@ -15,6 +15,12 @@ class InputField with _$InputField {
     /// Controller for this field. Will be used to get field value.
     required TextEditingController controller,
 
+    /// Type of keyboard that will be used for this field.
+    @Default(TextInputType.text) TextInputType keyboardType,
+
+    /// Whether this field should obscure text, useful for passwords.
+    @Default(false) bool obscureText,
+
     /// Whether this field is required. Will display '*' next to field name
     /// and will be used for validation.
     @Default(false) bool required,
@@ -84,7 +90,10 @@ class FormBuilder {
             )
           ),
           ..._fields.map((e) => _inputField(e)),
-          ..._submitButtons.map((e) => _constructButton(e)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: _submitButtons.map((e) => _constructButton(e)).toList(),
+          ),
         ].whereType<Widget>().toList(),
       ),
     );
@@ -93,6 +102,8 @@ class FormBuilder {
   TextFormField _inputField(InputField field) {
     return TextFormField(
         controller: field.controller,
+        keyboardType: field.keyboardType,
+        obscureText: field.obscureText,
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
           labelText: field.name + (field.required ? '*' : ''),

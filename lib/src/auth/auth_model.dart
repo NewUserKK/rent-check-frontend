@@ -3,9 +3,10 @@ import 'package:rent_checklist/src/auth/auth_state.dart';
 import 'package:rent_checklist/src/auth/network/auth_credentials_request.dart';
 import 'package:rent_checklist/src/common/arch/view_model.dart';
 import 'package:rent_checklist/src/common/experiments/features.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthEvent {}
-
+sealed class AuthEvent {}
+class AuthEventRegistrationSuccess extends AuthEvent {}
 class AuthEventRegistrationFailed extends AuthEvent {
   final Object error;
   AuthEventRegistrationFailed(this.error);
@@ -13,10 +14,23 @@ class AuthEventRegistrationFailed extends AuthEvent {
 
 
 class AuthModel extends ViewModel<AuthState, AuthEvent> {
+  static const sKeyToken = 'auth_token';
+
   final AuthApi _authApi = AuthApiFactory.create();
 
   @override
   AuthState state = NotAuthorized();
+
+  Future<bool> restoreAuth() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString(sKeyToken);
+    final hasToken = token != null;
+    if (hasToken) {
+      setState(Authorized(token: token));
+    }
+
+    return hasToken;
+  }
 
   Future<void> login(String login, String password) async {
     try {
@@ -24,12 +38,14 @@ class AuthModel extends ViewModel<AuthState, AuthEvent> {
         login: login,
         password: password,
       ));
-      setState(Authorized(token: authResponse.token));
+
+      _setAuthorized(Authorized(token: authResponse.token));
+
     } catch (e) {
       if (Features.useTestAuth.isEnabled) {
-        setState(const Authorized(token: 'test2'));
+        _setAuthorized(const Authorized(token: 'test2'));
       } else {
-        setState(NotAuthorized());
+        _setNotAuthorized();
       }
     }
   }
@@ -40,13 +56,26 @@ class AuthModel extends ViewModel<AuthState, AuthEvent> {
         login: login,
         password: password,
       ));
+      emitEvent(AuthEventRegistrationSuccess());
     } catch (e) {
       emitEvent(AuthEventRegistrationFailed(e));
     }
   }
 
   Future<void> logout() async {
-    setState(NotAuthorized());
+    _setNotAuthorized();
     await _authApi.logout();
+  }
+
+  Future<void> _setAuthorized(Authorized state) async {
+    setState(state);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(sKeyToken, state.token);
+  }
+
+  Future<void> _setNotAuthorized() async {
+    setState(NotAuthorized());
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(sKeyToken);
   }
 }
