@@ -63,8 +63,11 @@ class AuthModel extends ViewModel<AuthState, AuthEvent> {
   }
 
   Future<void> logout() async {
-    _setNotAuthorized();
-    await _authApi.logout();
+    try {
+      await _authApi.logout();
+    } finally {
+      _setNotAuthorized();
+    }
   }
 
   Future<void> _setAuthorized(Authorized state) async {
