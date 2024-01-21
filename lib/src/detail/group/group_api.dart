@@ -12,6 +12,7 @@ abstract interface class GroupApi {
   Future<Map<int, GroupModel>> getGroupsByIds(List<int> ids);
   Future<GroupModel> createGroup(GroupModel group);
   Future<void> addItemToGroup(int flatId, int groupId, int itemId);
+  Future<void> deleteItemFromGroup(int flatId, int groupId, int itemId);
 }
 
 class GroupApiFactory {
@@ -57,6 +58,17 @@ class NetworkGroupApi implements GroupApi {
         'flatId': flatId,
         'itemId': itemId,
       }
+    ));
+  }
+
+  @override
+  Future<void> deleteItemFromGroup(int flatId, int groupId, int itemId) async {
+    await request(() => kClient.delete(
+        'group/$groupId/items',
+        data: {
+          'flatId': flatId,
+          'itemId': itemId,
+        }
     ));
   }
 }
@@ -113,6 +125,11 @@ class FakeGroupApi implements GroupApi {
 
   @override
   Future<void> addItemToGroup(int flatId, int groupId, int itemId) async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+  }
+
+  @override
+  Future<void> deleteItemFromGroup(int flatId, int groupId, int itemId) async {
     await Future.delayed(const Duration(milliseconds: 1000));
   }
 }

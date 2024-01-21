@@ -73,7 +73,7 @@ class FlatDetailFacade {
   Future<void> deleteGroupFromFlat({
     required int flatId,
     required GroupModel group,
-}) async {
+  }) async {
     await _flatApi.deleteGroupFromFlat(flatId, group.id);
   }
 
@@ -97,5 +97,13 @@ class FlatDetailFacade {
         item: item,
         status: ItemStatus.unset
     );
+  }
+
+  Future<void> deleteItemFromGroup({
+    required int flatId,
+    required int groupId,
+    required int itemId,
+  }) async {
+    await _groupApi.deleteItemFromGroup(flatId, groupId, itemId);
   }
 }

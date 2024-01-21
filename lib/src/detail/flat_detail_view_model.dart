@@ -187,6 +187,30 @@ class FlatDetailViewModel extends ViewModel<
     setState(newModel);
   }
 
+  Future<void> deleteItemFromGroup({
+    required int groupId,
+    required int itemId
+  }) async {
+    if (this.state is! FlatDetailLoaded) {
+      return;
+    }
+
+    final state = this.state as FlatDetailLoaded;
+
+    await _facade.deleteItemFromGroup(
+      flatId: flat.id,
+      groupId: groupId,
+      itemId: itemId
+    );
+
+    setState(state.copyWith.model(
+        groups: state.model.groups.modify(
+            groupId,
+            (group) => group.copyWith(items: group.items.delete(itemId))
+        )
+    ));
+  }
+
   void _modifyItem(
       int groupId,
       int itemId,

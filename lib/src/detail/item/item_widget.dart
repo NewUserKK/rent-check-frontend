@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_checklist/src/detail/flat_detail_view_model.dart';
@@ -12,33 +14,40 @@ class ItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => _changeStatus(context),
-      child: Padding(
-          padding: const EdgeInsets.symmetric(
-              vertical: 16.0,
-              horizontal: 8.0,
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1.0),
-                  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                  color: _getItemColor(),
+    return Dismissible(
+      key: Key(item.item.id.toString()),
+      dismissThresholds: const {
+        DismissDirection.horizontal: 0.7
+      },
+      onDismissed: (direction) => _onItemDelete(context),
+      child: InkWell(
+        onTap: () => _changeStatus(context),
+        child: Padding(
+            padding: const EdgeInsets.symmetric(
+                vertical: 16.0,
+                horizontal: 8.0,
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1.0),
+                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                    color: _getItemColor(),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                width: 12.0, height: 0,
-              ),
-              Text(
-                item.item.title,
-                style: Theme.of(context).textTheme.bodyLarge,
-              )
-            ],
-          )
+                const SizedBox(
+                  width: 12.0, height: 0,
+                ),
+                Text(
+                  item.item.title,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                )
+              ],
+            )
+        ),
       ),
     );
   }
@@ -47,6 +56,13 @@ class ItemWidget extends StatelessWidget {
     Provider.of<FlatDetailViewModel>(context, listen: false).rotateItemStatus(
       group.id,
       item.item.id,
+    );
+  }
+
+  void _onItemDelete(BuildContext context) {
+    Provider.of<FlatDetailViewModel>(context, listen: false).deleteItemFromGroup(
+      groupId: group.id,
+      itemId: item.item.id,
     );
   }
 
