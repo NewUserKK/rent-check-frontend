@@ -6,10 +6,17 @@ import 'package:rent_checklist/src/common/experiments/features.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 sealed class AuthEvent {}
+
 class AuthEventRegistrationSuccess extends AuthEvent {}
+
 class AuthEventRegistrationFailed extends AuthEvent {
   final Object error;
   AuthEventRegistrationFailed(this.error);
+}
+
+class AuthEventLoginFailed extends AuthEvent {
+  final Object error;
+  AuthEventLoginFailed(this.error);
 }
 
 
@@ -46,6 +53,7 @@ class AuthModel extends ViewModel<AuthState, AuthEvent> {
         _setAuthorized(const Authorized(token: 'test2'));
       } else {
         _setNotAuthorized();
+        emitEvent(AuthEventLoginFailed(e));
       }
     }
   }

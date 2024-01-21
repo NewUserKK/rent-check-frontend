@@ -82,7 +82,9 @@ class _AuthFormState extends ViewModelWidgetState<
     AuthEventRegistrationSuccess _ =>
         showSnackBar(context, Strings.authFormRegisterSuccess),
     AuthEventRegistrationFailed e =>
-        showSnackBar(context, "${Strings.authFormRegisterError}: ${e.error}")
+        showSnackBar(context, "${Strings.authFormRegisterError}: ${e.error}"),
+    AuthEventLoginFailed _ =>
+        showSnackBar(context, Strings.authFormLoginError),
   };
 
   void _register() async {
