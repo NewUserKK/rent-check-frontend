@@ -1,0 +1,6 @@
+# generate icons by running `dart run flutter_launcher_icons`
+
+flutter_launcher_icons:
+  web:
+    generate: true
+    image_path: "lib/resources/logo.webp"
