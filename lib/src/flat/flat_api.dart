@@ -11,6 +11,7 @@ abstract interface class FlatApi {
   Future<void> deleteFlat(int flatId);
   Future<List<FlatDetailItemsResponse>> getItems(int flatId);
   Future<void> addGroupToFlat(int flatId, int groupId);
+  Future<void> deleteGroupFromFlat(int flatId, int groupId);
 }
 
 class FlatApiFactory {
@@ -50,6 +51,14 @@ class NetworkFlatApi implements FlatApi {
   @override
   Future<void> addGroupToFlat(int flatId, int groupId) async {
     await kClient.post(
+        'flats/$flatId/groups',
+        data: {'groupId': groupId}
+    );
+  }
+
+  @override
+  Future<void> deleteGroupFromFlat(int flatId, int groupId) async {
+    await kClient.delete(
         'flats/$flatId/groups',
         data: {'groupId': groupId}
     );
@@ -139,6 +148,16 @@ class FakeFlatApi implements FlatApi {
     final response = fakeResponseOf(
       'flats/$flatId/groups',
       ''
+    );
+
+    await request(() => Future.value(response));
+  }
+
+  @override
+  Future<void> deleteGroupFromFlat(int flatId, int groupId) async {
+    final response = fakeResponseOf(
+        'flats/$flatId/groups',
+        ''
     );
 
     await request(() => Future.value(response));

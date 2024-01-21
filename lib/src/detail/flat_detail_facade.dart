@@ -70,6 +70,13 @@ class FlatDetailFacade {
     );
   }
 
+  Future<void> deleteGroupFromFlat({
+    required int flatId,
+    required GroupModel group,
+}) async {
+    await _flatApi.deleteGroupFromFlat(flatId, group.id);
+  }
+
   Future<ItemWithStatus> createAndAddItem({
     required int flatId,
     required int groupId,

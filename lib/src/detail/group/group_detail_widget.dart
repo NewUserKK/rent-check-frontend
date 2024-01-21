@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_checklist/src/detail/flat_detail_model.dart';
 import 'package:rent_checklist/src/detail/flat_detail_view_model.dart';
+import 'package:rent_checklist/src/detail/group/group_model.dart';
 import 'package:rent_checklist/src/detail/item/add/item_add_screen.dart';
 import 'package:rent_checklist/src/detail/item/item_widget.dart';
 
@@ -26,12 +27,23 @@ class GroupWidget extends StatelessWidget {
                         groupDetails.group.title,
                         style: Theme.of(context).textTheme.headlineSmall
                       ),
-                      IconButton(
-                          onPressed: () => _onItemAddClicked(
-                              context,
-                              groupDetails.group.id
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () => _onDeleteClicked(
+                                context,
+                                groupDetails.group
+                            ),
+                            icon: const Icon(Icons.delete),
                           ),
-                          icon: const Icon(Icons.add)
+                          IconButton(
+                              onPressed: () => _onItemAddClicked(
+                                  context,
+                                  groupDetails.group.id
+                              ),
+                              icon: const Icon(Icons.add)
+                          ),
+                        ],
                       )
                     ],
                   ),
@@ -63,5 +75,10 @@ class GroupWidget extends StatelessWidget {
             )
         )
     );
+  }
+
+  void _onDeleteClicked(BuildContext context, GroupModel group) {
+    Provider.of<FlatDetailViewModel>(context, listen: false)
+        .deleteGroupFromFlat(group);
   }
 }
