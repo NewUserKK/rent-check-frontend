@@ -1,6 +1,6 @@
-# rent-checklist-frontend
+# rent-check-frontend
 
-Frontend for rent-checklist app.
+Frontend for rent-check app.
 
 Currently deployed at http://158.160.2.44:9999
 
