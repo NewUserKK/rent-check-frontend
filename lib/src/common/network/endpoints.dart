@@ -1,4 +1,4 @@
 class Endpoints {
-  static const _host = 'http://158.160.2.44:2345';
+  static const _host = 'https://rentcheck.newuserk.me.uk';
   static const apiV1 = '$_host/api/v1/';
 }
